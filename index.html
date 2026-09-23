@@ -378,28 +378,12 @@
   }
   .info-btn:active { transform: scale(0.92); }
   .modal-overlay {
-    position: fixed; inset: 0; z-index: 100;
+    position: fixed; inset: 0; z-index: 500;
     background: rgba(0,0,0,.55);
     display: none; align-items: center; justify-content: center;
     padding: 20px;
   }
   .modal-overlay.open { display: flex; }
-  .modal.full-screen-panel {
-    width: 100vw; max-width: none; height: 100vh; max-height: none;
-    border-radius: 0; padding: calc(22px + env(safe-area-inset-top, 0px)) 22px calc(22px + env(safe-area-inset-bottom, 0px));
-    overflow-y: auto; animation: panelIn .42s cubic-bezier(.2,.8,.2,1);
-  }
-  @keyframes panelIn { from { opacity: 0; transform: translateY(28px) scale(.985); } to { opacity: 1; transform: translateY(0) scale(1); } }
-  .company-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:12px; margin:12px 0; }
-  .company-card { border:1px solid var(--border); border-radius:14px; padding:14px; background:var(--slot-empty); animation: panelCardIn .4s both; }
-  .company-card:nth-child(2){animation-delay:.05s}.company-card:nth-child(3){animation-delay:.1s}.company-card:nth-child(4){animation-delay:.15s}.company-card:nth-child(5){animation-delay:.2s}
-  @keyframes panelCardIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
-  .office-card h3,.employee-card h3 { margin:0 0 6px; }
-  .office-price { font-weight:800; margin:7px 0; }
-  .office-card button { width:100%; }
-  .employee-row { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 0; border-bottom:1px solid var(--border); }
-  .employee-row:last-child { border-bottom:0; }
-  .employee-meta { font-size:.76rem; color:var(--text-dim); }
   .modal {
     background: var(--card-bg); color: var(--text);
     border: 1px solid var(--border); border-radius: 16px;
@@ -467,6 +451,35 @@
     overflow-y: auto;
   }
   .screen.open { display: flex; }
+  .splash-screen {
+    width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+    background: var(--bg); opacity: 1; transform: scale(1);
+    animation: splashFadeIn .65s ease-out both;
+  }
+  .splash-title {
+    font-size: clamp(2rem, 7vw, 4rem); font-weight: 900; letter-spacing: -0.04em;
+    color: var(--text); animation: splashTitleIn .8s cubic-bezier(.2,.8,.2,1) both;
+  }
+  #introScreen.splash-leaving { animation: splashScreenOut .75s ease-in forwards; pointer-events: none; }
+  #introScreen.splash-leaving .splash-title { animation: splashTitleOut .6s ease-in forwards; }
+  .beta-card { animation: betaCardIn .35s ease-out both; }
+  .account-card { animation: betaCardIn .35s ease-out both; }
+  .account-card h2 { color: var(--text); }
+  .account-tabs { display:flex; gap:8px; margin:0 0 16px; }
+  .account-tab { flex:1; padding:10px 8px; border:1px solid var(--border); border-radius:10px; background:var(--slot-empty); color:var(--text); font-weight:800; cursor:pointer; }
+  .account-tab.active { background:var(--accent); color:#fff; border-color:var(--accent); }
+  .profile-list { display:flex; flex-direction:column; gap:9px; margin:0 0 14px; text-align:left; }
+  .profile-choice { width:100%; padding:12px; border:1px solid var(--border); border-radius:12px; background:var(--card-bg); color:var(--text); cursor:pointer; text-align:left; }
+  .profile-choice strong { display:block; font-size:.95rem; }
+  .profile-choice span { display:block; margin-top:3px; color:var(--text-dim); font-size:.78rem; }
+  .account-note { margin:-5px 0 14px; color:var(--text-dim); font-size:.78rem; line-height:1.4; text-align:left; }
+  .account-step { display:none; }
+  .account-step.active { display:block; }
+  @keyframes splashFadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes splashTitleIn { from { opacity: 0; transform: translateY(16px) scale(.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
+  @keyframes splashTitleOut { from { opacity: 1; transform: translateY(0) scale(1); } to { opacity: 0; transform: translateY(-18px) scale(1.03); } }
+  @keyframes splashScreenOut { from { opacity: 1; } to { opacity: 0; visibility: hidden; } }
+  @keyframes betaCardIn { from { opacity: 0; transform: translateY(12px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
   .screen-card {
     width: 100%; max-width: 420px; text-align: center;
   }
@@ -565,6 +578,7 @@
   .big-btn.red { background: linear-gradient(135deg, #e0283f, #b3132b); }
 
   /* ---- panel boczny ---- */
+  .company-overlay{position:fixed;inset:0;z-index:120;background:var(--bg);opacity:0;transform:scale(.985);pointer-events:none;transition:opacity .28s ease,transform .28s ease;overflow:auto}.company-overlay.open{opacity:1;transform:scale(1);pointer-events:auto}.company-head{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:10px;padding:18px 20px;background:var(--card-bg);border-bottom:1px solid var(--line);box-shadow:0 3px 14px rgba(0,0,0,.08)}.company-head h2{margin:0;flex:1}.company-close{border:0;background:var(--slot-empty);border-radius:12px;padding:10px 14px;font-weight:800;cursor:pointer}.company-tabs{display:none}.company-tab{display:none}.company-back{border:0;background:var(--slot-empty);color:var(--text);border-radius:12px;padding:10px 14px;font-weight:900;cursor:pointer}.company-home-grid .company-nav-card{min-height:190px;display:flex;flex-direction:column}.company-nav-card .company-action{margin-top:auto;align-self:flex-start}.company-content{min-height:calc(100vh - 86px);max-width:1100px;margin:0 auto;padding:24px;animation:companyContentIn .3s ease}.company-content > *{animation:companyTabIn .3s ease both}.company-content{max-width:1050px;margin:0 auto;padding:16px;animation:companyContentIn .3s ease}.company-content > *{animation:companyTabIn .3s ease both}@keyframes companyContentIn{from{opacity:0;transform:scale(.985)}to{opacity:1;transform:scale(1)}}@keyframes companyTabIn{from{opacity:0;transform:translateY(12px) scale(.985)}to{opacity:1;transform:none}}.company-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}.company-card{background:var(--card-bg);color:var(--text);border:1px solid var(--border);border-radius:16px;padding:16px;box-shadow:0 4px 16px rgba(0,0,0,.05)}.company-card h3,.company-card p,.company-card small,.company-card b,.company-card span{color:var(--text)}.company-card .dim{color:var(--text-dim)}.employee-row,.build-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}.employee-row:last-child,.build-row:last-child{border-bottom:0}.company-action{border:0;background:var(--accent);color:#fff;border-radius:10px;padding:9px 12px;font-weight:800;cursor:pointer}.company-action.secondary{background:var(--slot-empty);color:var(--text)}.company-action:disabled{opacity:.45;cursor:not-allowed}.progress-track{height:10px;background:var(--slot-empty);border-radius:99px;overflow:hidden;margin:8px 0}.progress-fill{height:100%;background:var(--accent);width:0;transition:width .25s ease}.company-stat{font-size:1.25rem;font-weight:900;color:var(--text)}.company-mini-btn{border:1px solid var(--accent);background:transparent;color:var(--accent);border-radius:9px;padding:6px 10px;font-weight:800;cursor:pointer;margin-top:10px}.company-mini-btn:hover{background:var(--accent);color:#fff}.warehouse-modal-list{max-height:60vh;overflow:auto;animation:companyTabIn .25s ease}
   .drawer-overlay {
     position: fixed; inset: 0; z-index: 140; background: rgba(0, 0, 0, 0.5);
     opacity: 0; pointer-events: none; transition: opacity .25s;
@@ -639,20 +653,28 @@
   .del-btn.confirm { background: var(--danger); color: #fff; }
 
   /* ---- kariera: ekonomia ---- */
-  .career-bar.show { display: flex; flex-direction: column; align-items: stretch; gap: 8px; }
-  .cb-main { display: flex; align-items: center; gap: 10px; }
-  .cb-info { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; min-width: 0; }
-  .cb-foot { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .career-bar.show { display: flex; flex-direction: row; align-items: center; gap: 10px; }
+  .cb-main { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1; }
+  .cb-info { display: flex; flex-direction: row; align-items: center; gap: 8px; min-width: 0; flex-wrap: wrap; }
+  .cb-foot { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; margin-left: auto; }
+  .cb-main > .avatar-sm { flex: 0 0 auto; }
+  .cb-info .cb-chip { flex: 0 0 auto; }
+  .cb-info .cb-company { order: -1; }
+  @media (max-width: 760px) {
+    .career-bar.show { flex-direction: column; align-items: stretch; }
+    .cb-foot { margin-left: 0; }
+    .cb-info { align-items: center; }
+  }
   .cb-chip {
     display: inline-flex; align-items: center; gap: 4px; padding: 3px 11px; border-radius: 12px;
     border: 1.5px solid var(--border); background: var(--card-bg); color: var(--text);
-    font-weight: 800; font-size: 0.85rem; cursor: pointer; font-family: inherit;
+    font-weight: 800; font-size: 0.78rem; cursor: pointer; font-family: inherit;
   }
   .cb-chip.money { border-color: #22a55a; color: #0f8a48; }
   .cb-chip.tech { border-color: #7a4cff; color: #6a3fe0; }
   .cb-chip.fans { border-color: #e0489f; color: #c0347f; font-size: 0.78rem; }
   .cb-date {
-    padding: 3px 11px; border-radius: 12px; font-weight: 800; font-size: 0.8rem;
+    padding: 3px 9px; border-radius: 12px; font-weight: 800; font-size: 0.76rem;
     background: rgba(255, 176, 32, 0.22); border: 1.5px solid #ffb020;
   }
   .turn-btn {
@@ -693,6 +715,61 @@
   .prod-body ul { margin: 4px 0 0; padding-left: 18px; }
   .drawer-item.career-only { display: none; }
   body.career-mode .drawer-item.career-only { display: block; }
+
+  /* ---- lekkie animacje interfejsu ---- */
+  @keyframes uiTap {
+    0% { transform: scale(1); }
+    45% { transform: scale(0.96); }
+    100% { transform: scale(1); }
+  }
+  @keyframes screenIn {
+    from { opacity: 0; transform: translateY(8px) scale(.985); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  @keyframes modalIn {
+    from { opacity: 0; transform: translateY(10px) scale(.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  @keyframes dayPulse {
+    0% { transform: scale(1); }
+    40% { transform: scale(1.06); box-shadow: 0 0 0 5px rgba(255,176,32,.12); }
+    100% { transform: scale(1); }
+  }
+  .tap-anim { animation: uiTap .22s ease-out; }
+  .screen.open .screen-card { animation: screenIn .28s ease-out; }
+  .modal-overlay.open .modal { animation: modalIn .22s ease-out; }
+  .cb-date.day-tick { animation: dayPulse .38s ease-out; }
+  .difficulty-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; margin-top: 5px; }
+  .difficulty-option {
+    display: block; padding: 9px 7px; border: 1px solid var(--border); border-radius: 10px;
+    background: var(--slot-empty); cursor: pointer; text-align: center;
+  }
+  .difficulty-option input { position: absolute; opacity: 0; pointer-events: none; }
+  .difficulty-title { display: flex; align-items: center; justify-content: center; gap: 6px; }
+  .difficulty-option strong { display: block; font-size: .78rem; }
+  .difficulty-info { width: 18px; height: 18px; padding: 0; border-radius: 50%; border: 1px solid var(--border); background: var(--bg); color: var(--text-dim); font-size: .68rem; font-weight: 800; cursor: pointer; line-height: 16px; }
+  .difficulty-info:hover { border-color: var(--accent-2); color: var(--accent-2); }
+  .difficulty-option:has(input:checked) { border-color: var(--accent-2); box-shadow: 0 0 0 2px rgba(46,92,255,.12) inset; background: rgba(46,92,255,.08); }
+  .loan-quick { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin: 6px 0 9px; }
+  .loan-quick button {
+    padding: 8px 3px; border-radius: 9px; border: 1px solid var(--border);
+    background: var(--slot-empty); color: var(--text); font-weight: 700; font-size: .76rem; cursor: pointer;
+  }
+  .loan-quick button:active { transform: scale(.96); }
+  .menu-version { color: rgba(255,255,255,.65); font-size: .67rem; margin: 0 0 5px; letter-spacing: .03em; }
+  .critic-stars { display:inline-flex; gap:2px; align-items:center; min-height:1.35em; }
+  .critic-star { display:inline-block; opacity:0; transform:translateY(-10px) scale(.35) rotate(-18deg); animation: criticStarPop .48s cubic-bezier(.2,.9,.25,1.25) forwards; }
+  .critic-star:nth-child(1){animation-delay:.04s}.critic-star:nth-child(2){animation-delay:.12s}.critic-star:nth-child(3){animation-delay:.20s}.critic-star:nth-child(4){animation-delay:.28s}.critic-star:nth-child(5){animation-delay:.36s}
+  @keyframes criticStarPop { 0%{opacity:0;transform:translateY(-10px) scale(.35) rotate(-18deg)} 65%{opacity:1;transform:translateY(2px) scale(1.18) rotate(4deg)} 100%{opacity:1;transform:translateY(0) scale(1) rotate(0)} }
+  .settings-select { width:100%; padding:10px 12px; border-radius:10px; border:1px solid var(--border); background:var(--bg); color:var(--text); font:inherit; }
+  .settings-check { width:20px; height:20px; accent-color:var(--accent-2); }
+  body.force-light, :root[data-theme="light"] { --bg:#f4f2ee; --card-bg:#fff; --text:#1c1b1a; --text-dim:#6b6862; --border:#e3e0da; --slot-empty:#f0eee9; }
+  body.force-light #menuArt { filter:none; }
+  .settings-range { width: 100%; accent-color: var(--accent-2); }
+  .settings-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 0; }
+  .settings-row label { font-size: .86rem; font-weight: 700; }
+  .settings-value { font-size: .8rem; color: var(--text-dim); min-width: 42px; text-align: right; }
+  .auto-note { font-size: .7rem; color: var(--text-dim); margin-top: 4px; }
 </style>
 </head>
 <body class="in-menu">
@@ -749,19 +826,94 @@
 </svg>
 </div>
 
-<div class="screen art" id="introScreen">
-  <div class="screen-card warn-card">
-    <h2>Witaj w grze!</h2>
+<div class="screen art open" id="introScreen">
+  <div class="splash-screen" aria-label="Witaj w grze">
+    <div class="splash-title">Witaj w grze!</div>
+  </div>
+</div>
+
+<div class="screen art" id="accountChooserScreen">
+  <div class="screen-card warn-card account-card">
+    <h2>👤 Wybierz profil</h2>
+    <p>Wybierz zapisany profil albo dodaj nowy.</p>
+    <div class="profile-list" id="savedProfilesList"></div>
+    <button class="big-btn green" id="addNewProfileBtn">➕ Dodaj nowy profil</button>
+  </div>
+</div>
+
+<div class="screen art" id="accountScreen">
+  <div class="screen-card warn-card account-card">
+    <h2>👤 Konto ForgeTech</h2>
+    <div class="account-tabs">
+      <button class="account-tab active" id="loginTab">Logowanie</button>
+      <button class="account-tab" id="registerTab">Nowe konto</button>
+    </div>
+    <div class="account-step active" id="loginStep">
+      <label class="field">Email
+        <input type="email" id="accountLoginEmail" maxlength="120" autocomplete="email" placeholder="np. jan@example.com">
+      </label>
+      <label class="field">Hasło
+        <input type="password" id="accountLoginPassword" maxlength="80" autocomplete="current-password" placeholder="Wpisz hasło">
+      </label>
+      <div class="account-note">Email musi mieć poprawny format. Gra zapisuje profil lokalnie w tej przeglądarce.</div>
+      <div class="form-error" id="accountLoginError"></div>
+      <button class="big-btn green" id="accountLoginBtn">Zaloguj się</button>
+      <button class="big-btn secondary" id="accountLoginBack">← Wróć</button>
+    </div>
+    <div class="account-step" id="registerStep">
+      <label class="field">Email
+        <input type="email" id="accountRegisterEmail" maxlength="120" autocomplete="email" placeholder="np. jan@example.com">
+      </label>
+      <label class="field">Hasło
+        <input type="password" id="accountRegisterPassword" maxlength="80" autocomplete="new-password" placeholder="Minimum 6 znaków">
+      </label>
+      <label class="field">Powtórz hasło
+        <input type="password" id="accountRegisterPassword2" maxlength="80" autocomplete="new-password" placeholder="Powtórz hasło">
+      </label>
+      <div class="account-note">Podaj prawidłowy adres email, jeśli w przyszłości gra będzie korzystać z wiadomości email.</div>
+      <div class="form-error" id="accountRegisterError"></div>
+      <button class="big-btn green" id="accountRegisterNext">Dalej</button>
+      <button class="big-btn secondary" id="accountRegisterBack">← Wróć</button>
+    </div>
+  </div>
+</div>
+
+<div class="screen art" id="personalDataScreen">
+  <div class="screen-card warn-card account-card">
+    <h2>🧑 Twój profil</h2>
+    <p>Uzupełnij dane profilu.</p>
+    <label class="field">Imię
+      <input type="text" id="profileFirstName" maxlength="40" autocomplete="given-name" placeholder="np. Jan">
+    </label>
+    <label class="field">Nazwisko
+      <input type="text" id="profileLastName" maxlength="50" autocomplete="family-name" placeholder="np. Kowalski">
+    </label>
+    <label class="field">Data urodzenia
+      <input type="date" id="profileBirthDate" autocomplete="bday">
+    </label>
+    <div class="form-error" id="personalDataError"></div>
+    <button class="big-btn green" id="personalDataSave">Zapisz profil</button>
+    <button class="big-btn secondary" id="personalDataBack">← Wróć</button>
+  </div>
+</div>
+
+<div class="screen art" id="betaNoticeScreen">
+  <div class="screen-card warn-card beta-card">
+    <h2>🧪 ForgeTech 0.0.1.0 BETA</h2>
+    <p>To wersja BETA gry. Mogą występować drobne błędy, crashe lub problemy z niektórymi funkcjami. Postęp również może nie zawsze zapisać się poprawnie.</p>
+    <button class="big-btn" id="betaNoticeOk">Rozumiem</button>
   </div>
 </div>
 
 <div class="screen art" id="menuScreen">
   <div class="screen-card menu-panel">
     <h1 class="menu-title">🛠 ForgeTech - Computer Building Simulator</h1>
+    <div class="menu-version">Version 0.0.1.0 BETA</div>
     <p class="menu-sub">Wybierz tryb gry</p>
     <button class="big-btn green" id="menuSandbox">🧪 Sandbox</button>
-    <button class="big-btn blue" id="menuCareer">🚀 Kariera - BETA</button>
+    <button class="big-btn blue" id="menuCareer">🚀 Kariera</button>
     <button class="big-btn amber" id="menuInfo">ℹ️ Informacje</button>
+    <button class="big-btn" id="menuSettings">⚙️ Ustawienia</button>
     <button class="big-btn red" id="menuExit">⏻ Wyjdź</button>
   </div>
 </div>
@@ -769,9 +921,10 @@
 <div class="screen art" id="infoScreen">
   <div class="screen-card warn-card">
     <h2 style="color:var(--text)">ℹ️ Informacje</h2>
-    <p>Gra jest obecnie w fazie rozwoju. Większość rzeczy jest zablokowana dla graczy, żeby nie powodować błędów, lecz nie są one w 100% wykluczone. Dużo rzeczy zawiera przyciski interaktywne, dzięki czemu bez samouczka możesz zrozumieć, co do czego służy.</p>
-    <p>Zakładki takie jak Telefon lub Robot są w fazie rozwoju, więc nie będzie tam dużo opcji do wyboru. Zakładka Komputer jest w fazie BETA - prawie ukończona, lecz dużo brakuje do końca.</p>
-    <p>Gra ma również mało kolorów, ponieważ na razie skupiam się na dodawaniu ważniejszych rzeczy, żeby to w ogóle działało.</p>
+    <p>Gra jest obecnie w fazie BETA. Mogą występować drobne błędy, crashe lub problemy z niektórymi funkcjami. Niektóre rzeczy mogą nie działać w 100% poprawnie. Dużo rzeczy zawiera przyciski interaktywne, dzięki czemu bez samouczka możesz zrozumieć, co do czego służy.</p>
+    <p>Zakładki takie jak Telefon lub Robot mają na razie mniej opcji do wyboru.</p>
+    <p>Wersja BETA może zawierać drobne błędy i crashe. Jeśli coś nie działa poprawnie, warto spróbować ponownie lub uruchomić grę od nowa.</p>
+    <p>Gra ma również mało kolorów, ponieważ na razie skupiam się na dodawaniu ważniejszych rzeczy.</p>
     <button class="big-btn" id="infoBack">← Wróć do menu</button>
   </div>
 </div>
@@ -786,8 +939,8 @@
 
 <div class="screen art" id="careerWarnScreen">
   <div class="screen-card warn-card">
-    <h2>⚠ Kariera - BETA</h2>
-    <p>Kariera jest w wersji BETA. Niektóre rzeczy mają błędy i mogą nie działać lub powodują crashe gry. Gra czasami nie zapamiętuje zapisanych danych. Klikając przycisk ROZUMIEM zgadzasz się na ryzyko utraty postępów.</p>
+    <h2>🚀 Kariera</h2>
+    <p>Niektóre rzeczy mogą zawierać błędy i nie zawsze działać poprawnie. Gra może czasami nie zapamiętać zapisanych danych. Klikając przycisk ROZUMIEM zgadzasz się na ryzyko utraty postępów.</p>
     <button class="big-btn" id="careerWarnOk">ROZUMIEM</button>
     <button class="big-btn secondary" id="careerWarnBack">← Wróć do menu</button>
   </div>
@@ -815,11 +968,20 @@
     <label class="field">Nazwa firmy
       <input type="text" id="fCompany" maxlength="40" placeholder="np. ForgeTech Sp. z o.o.">
     </label>
+    <label class="field">Poziom trudności
+      <div class="difficulty-grid">
+        <label class="difficulty-option"><input type="radio" name="difficulty" value="easy" checked><span class="difficulty-title"><strong>Łatwy</strong><button type="button" class="difficulty-info" data-difficulty="easy" aria-label="Informacje o poziomie łatwym">i</button></span></label>
+        <label class="difficulty-option"><input type="radio" name="difficulty" value="medium"><span class="difficulty-title"><strong>Średni</strong><button type="button" class="difficulty-info" data-difficulty="medium" aria-label="Informacje o poziomie średnim">i</button></span></label>
+        <label class="difficulty-option"><input type="radio" name="difficulty" value="hard"><span class="difficulty-title"><strong>Trudny</strong><button type="button" class="difficulty-info" data-difficulty="hard" aria-label="Informacje o poziomie trudnym">i</button></span></label>
+      </div>
+    </label>
     <div class="form-error" id="formError"></div>
     <button class="big-btn green" id="careerCreate">Utwórz</button>
     <button class="big-btn secondary" id="careerFormBack">← Wróć</button>
   </div>
 </div>
+
+<div class="company-overlay" id="companyOverlay"><div class="company-head"><button class="company-back" id="companyBack" style="display:none">← Firma</button><h2 id="companyTitle">🏢 Firma</h2><button class="company-close" id="companyClose">✕ Zamknij</button></div><div class="company-content" id="companyContent"></div></div>
 
 <div id="gameRoot" style="display:none">
 <div class="topbar"><button class="menu-btn" id="openDrawer">☰ Menu</button><h1>🛠 ForgeTech</h1><span class="mode-badge sandbox" id="modeBadge">Sandbox</span></div>
@@ -856,9 +1018,7 @@
   <div class="drawer-head">🛠 ForgeTech<span class="drawer-mode" id="drawerMode">Sandbox</span></div>
   <button class="drawer-item exit" data-act="exit">🚪 Wyjdź do menu</button>
   <button class="drawer-item career-only" data-act="save" id="saveItem">💾 Zapisz grę</button>
-  <button class="drawer-item" data-act="create" id="drawerCreate">🛠️ Stwórz</button>
   <button class="drawer-item" data-act="soon" data-title="Firma">🏢 Firma</button>
-  <button class="drawer-item" data-act="soon" data-title="Pracownicy">👷 Pracownicy</button>
   <button class="drawer-item" data-act="soon" data-title="Statystyki">📊 Statystyki</button>
   <button class="drawer-item" data-act="soon" data-title="Finanse">💰 Finanse</button>
   <button class="drawer-item" data-act="soon" data-title="Wykres">📈 Wykres</button>
@@ -883,7 +1043,7 @@ const RIVAL_BRANDS = ["ByteForge", "QuantumCore", "NexTech Systems", "Vortex PC"
 const CATEGORIES = {
   phone: {
     name: "📱 Telefon",
-    badge: { type: "beta", text: "🚧 BETA" },
+    badge: { type: "", text: "" },
     slotDefs: [
       { key: "body", label: "Obudowa" },
       { key: "screen", label: "Ekran" },
@@ -922,7 +1082,7 @@ const CATEGORIES = {
   },
   robot: {
     name: "🤖 Robot",
-    badge: { type: "beta", text: "🚧 BETA" },
+    badge: { type: "", text: "" },
     slotDefs: [
       { key: "chassis", label: "Podwozie" },
       { key: "head", label: "Głowa" },
@@ -1413,6 +1573,19 @@ let tierFilter = "all";
 let created = false;
 let missingKeys = [];
 
+const SLOT_LABELS = {
+  pl: { body:"Obudowa", screen:"Ekran", camera:"Aparat", cpu:"Procesor", battery:"Bateria", chassis:"Podwozie", head:"Głowa", arm:"Ramię", power:"Zasilanie", case:"Obudowa", motherboard:"Płyta gł.", ram:"RAM", storage:"Dysk", gpu:"Karta gr.", psu:"Zasilacz", cool:"Chłodzenie" },
+  cs: { body:"Kryt", screen:"Displej", camera:"Fotoaparát", cpu:"Procesor", battery:"Baterie", chassis:"Podvozek", head:"Hlava", arm:"Rameno", power:"Napájení", case:"Skříň", motherboard:"Základní deska", ram:"RAM", storage:"Disk", gpu:"Grafická karta", psu:"Napájecí zdroj", cool:"Chlazení" },
+  en: { body:"Body", screen:"Display", camera:"Camera", cpu:"Processor", battery:"Battery", chassis:"Chassis", head:"Head", arm:"Arm", power:"Power", case:"Case", motherboard:"Motherboard", ram:"RAM", storage:"Storage", gpu:"Graphics card", psu:"Power supply", cool:"Cooling" }
+};
+const CATEGORY_LABELS = {
+  pl: { phone:"📱 Telefon", robot:"🤖 Robot", computer:"💻 Komputer" },
+  cs: { phone:"📱 Telefon", robot:"🤖 Robot", computer:"💻 Počítač" },
+  en: { phone:"📱 Phone", robot:"🤖 Robot", computer:"💻 Computer" }
+};
+function slotLabel(key, fallback){ return (SLOT_LABELS[uiSettings.lang] || SLOT_LABELS.pl)[key] || fallback || key; }
+function categoryLabel(key){ return (CATEGORY_LABELS[uiSettings.lang] || CATEGORY_LABELS.pl)[key] || CATEGORIES[key].name; }
+
 function initBuild() {
   build = {};
   CATEGORIES[currentCat].slotDefs.forEach(s => build[s.key] = null);
@@ -1430,7 +1603,7 @@ function renderTabs() {
     const btn = document.createElement("button");
     const lockedCat = isCareer() && key !== "computer";
     btn.className = "tab" + (key === currentCat ? " active" : "") + (lockedCat ? " locked" : "");
-    btn.textContent = (lockedCat ? "🔒 " : "") + CATEGORIES[key].name;
+    btn.textContent = (lockedCat ? "🔒 " : "") + categoryLabel(key);
     btn.onclick = () => {
       if (lockedCat) {
         openModal("🔒 Zablokowane", "<p>Telefony i roboty są zablokowane w trybie Kariera. Na razie możesz budować tylko komputery.</p>", false);
@@ -1456,8 +1629,8 @@ function renderSlots() {
     let cls = "slot" + (val ? " filled" : "") + (missingKeys.includes(def.key) && !val ? " missing" : "");
     el.className = cls;
     el.innerHTML = val
-      ? `<div class="emoji">${val.emoji}</div><div class="part-name">${val.name}</div><div class="label">${def.label}</div>`
-      : `<div class="emoji">➕</div><div class="label">${def.label}</div>`;
+      ? `<div class="emoji">${val.emoji}</div><div class="part-name">${val.name}</div><div class="label">${slotLabel(def.key, def.label)}</div>`
+      : `<div class="emoji">➕</div><div class="label">${slotLabel(def.key, def.label)}</div>`;
     el.onclick = () => {
       activeKey = def.key;
       tierFilter = "all";
@@ -1479,7 +1652,7 @@ function renderSwitcher() {
   cat.slotDefs.forEach(s => {
     const b = document.createElement("button");
     b.className = "switcher-btn" + (s.key === activeKey ? " active" : "");
-    b.textContent = s.label + (build[s.key] ? " ✓" : "");
+    b.textContent = slotLabel(s.key, s.label) + (build[s.key] ? " ✓" : "");
     b.onclick = () => {
       activeKey = s.key;
       tierFilter = "all";
@@ -1496,7 +1669,8 @@ function renderTierFilters() {
   const list = cat.parts[activeKey];
   const hasTiers = list.some(p => p.tier);
   if (!hasTiers) return;
-  const options = [["all", "Wszystkie"], ["niska", "Niska"], ["srednia", "Średnia"], ["wysoka", "Wysoka"]];
+  const tierOptions = { pl:[["all","Wszystkie"],["niska","Niska"],["srednia","Średnia"],["wysoka","Wysoka"]], cs:[["all","Všechny"],["niska","Nízká"],["srednia","Střední"],["wysoka","Vysoká"]], en:[["all","All"],["niska","Low"],["srednia","Medium"],["wysoka","High"]] };
+  const options = tierOptions[uiSettings.lang] || tierOptions.pl;
   options.forEach(([key, label]) => {
     const b = document.createElement("button");
     b.className = "tier-filter-btn" + (tierFilter === key ? " active" : "");
@@ -1522,7 +1696,8 @@ function renderPalette() {
   const paletteTitle = document.getElementById("paletteTitle");
   const palette = document.getElementById("palette");
   const cat = CATEGORIES[currentCat];
-  const groupLabel = cat.slotDefs.find(s => s.key === activeKey)?.label || "";
+  const groupDef = cat.slotDefs.find(s => s.key === activeKey);
+  const groupLabel = groupDef ? slotLabel(groupDef.key, groupDef.label) : "";
   paletteTitle.innerHTML = "";
   const titleText = document.createElement("span");
   titleText.textContent = "Wybierz: " + groupLabel;
@@ -1683,15 +1858,6 @@ function openModal(title, bodyHtml, isError, buttons) {
   }
   document.getElementById("modalOverlay").classList.add("open");
 }
-function openFullScreenModal(title, bodyHtml, isError, buttons) {
-  openModal(title, bodyHtml, isError, buttons);
-  const box = document.getElementById("modalBox");
-  box.classList.add("full-screen-panel");
-  void box.offsetWidth;
-  box.classList.remove("full-screen-panel");
-  void box.offsetWidth;
-  box.classList.add("full-screen-panel");
-}
 function closeModal() {
   document.getElementById("modalOverlay").classList.remove("open");
 }
@@ -1708,6 +1874,7 @@ function renderAll() {
   renderPalette();
   renderStats();
   renderDeviceName();
+  if (typeof translateGameChrome === "function") translateGameChrome();
 }
 
 // Sprawdza kompatybilność podzespołów komputera. Zwraca listę komunikatów o błędach (pusta = wszystko OK).
@@ -1891,15 +2058,143 @@ document.getElementById("createBtn").onclick = () => {
   showSummary(isCareer());
 };
 
-document.getElementById("introOk").onclick = () => {
-  document.getElementById("introScreen").classList.remove("open");
-  document.getElementById("menuScreen").classList.add("open");
-};
+let splashFinished = false;
+function finishSplash() {
+  if (splashFinished) return;
+  splashFinished = true;
+  const intro = document.getElementById("introScreen");
+  intro.classList.add("splash-leaving");
+  setTimeout(() => {
+    intro.classList.remove("open", "splash-leaving");
+    startAccountFlow();
+  }, 760);
+}
+setTimeout(finishSplash, 2400);
+document.getElementById("betaNoticeOk").onclick = () => showScreen("menuScreen");
 // ---- Ekrany ----
-const SCREEN_IDS = ["introScreen", "menuScreen", "infoScreen", "exitScreen", "careerWarnScreen", "careerWelcomeScreen", "careerFormScreen"];
+const SCREEN_IDS = ["introScreen", "accountChooserScreen", "accountScreen", "personalDataScreen", "betaNoticeScreen", "menuScreen", "exitScreen", "careerWarnScreen", "careerWelcomeScreen", "careerFormScreen"];
+const difficultyInfo = {
+  easy: ["ℹ️ Łatwy", "Zasady działają tak jak obecnie. Otrzymujesz normalną liczbę punktów technologicznych i fanów, a konkurencja rozwija się w standardowym tempie."],
+  medium: ["ℹ️ Średni", "Zdobywasz mniej punktów technologicznych i fanów niż na łatwym poziomie, sprzedaż jest trudniejsza, a konkurencyjne firmy rozwijają się szybciej."],
+  hard: ["ℹ️ Trudny", "Zdobywasz jeszcze mniej punktów technologicznych i fanów, sprzedaż jest trudniejsza, a konkurencja jest wyraźnie silniejsza i szybciej rośnie."]
+};
+document.querySelectorAll(".difficulty-info").forEach(btn => {
+  btn.addEventListener("click", (e) => {
+    e.preventDefault(); e.stopPropagation();
+    const [title, body] = difficultyInfo[btn.dataset.difficulty] || difficultyInfo.easy;
+    openModal(title, `<p>${body}</p>`, false);
+  });
+});
+
 function showScreen(id) {
   SCREEN_IDS.forEach(i => document.getElementById(i).classList.toggle("open", i === id));
 }
+
+// ---- Konto gracza: profile zapisane lokalnie w przeglądarce ----
+const ACCOUNT_KEY = "forgetech.accounts.v1";
+let accounts = [];
+let pendingAccount = null;
+let selectedAccountEmail = "";
+function loadAccounts() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(ACCOUNT_KEY) || "[]");
+    return Array.isArray(raw) ? raw.filter(a => a && typeof a.email === "string" && typeof a.password === "string") : [];
+  } catch (e) { return []; }
+}
+function saveAccounts() {
+  try { localStorage.setItem(ACCOUNT_KEY, JSON.stringify(accounts)); return true; }
+  catch (e) { return false; }
+}
+function validEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+}
+function hashLocalPassword(password) {
+  // Lokalny identyfikator hasła, żeby nie trzymać go wprost w profilu.
+  let h = 2166136261;
+  for (let i = 0; i < password.length; i++) { h ^= password.charCodeAt(i); h = Math.imul(h, 16777619); }
+  return (h >>> 0).toString(16);
+}
+function renderSavedProfiles() {
+  const box = document.getElementById("savedProfilesList");
+  box.innerHTML = "";
+  if (!accounts.length) {
+    const p = document.createElement("div"); p.className = "account-note";
+    p.textContent = "Nie ma jeszcze zapisanych profili. Dodaj pierwszy profil.";
+    box.appendChild(p); return;
+  }
+  accounts.forEach(a => {
+    const b = document.createElement("button"); b.className = "profile-choice";
+    const strong = document.createElement("strong"); strong.textContent = (a.firstName || "Profil") + (a.lastName ? " " + a.lastName : "");
+    const span = document.createElement("span"); span.textContent = a.email;
+    b.appendChild(strong); b.appendChild(span);
+    b.onclick = () => { selectedAccountEmail = a.email; document.getElementById("accountLoginEmail").value = a.email; document.getElementById("accountLoginPassword").value = ""; switchAccountTab("login"); showScreen("accountScreen"); };
+    box.appendChild(b);
+  });
+}
+function switchAccountTab(which) {
+  const login = which === "login";
+  document.getElementById("loginTab").classList.toggle("active", login);
+  document.getElementById("registerTab").classList.toggle("active", !login);
+  document.getElementById("loginStep").classList.toggle("active", login);
+  document.getElementById("registerStep").classList.toggle("active", !login);
+}
+function startAccountFlow() {
+  accounts = loadAccounts();
+  if (accounts.length) { renderSavedProfiles(); showScreen("accountChooserScreen"); }
+  else { switchAccountTab("register"); showScreen("accountScreen"); }
+}
+document.getElementById("addNewProfileBtn").onclick = () => {
+  selectedAccountEmail = "";
+  ["accountRegisterEmail","accountRegisterPassword","accountRegisterPassword2"].forEach(id => document.getElementById(id).value = "");
+  document.getElementById("accountRegisterError").textContent = "";
+  switchAccountTab("register"); showScreen("accountScreen");
+};
+document.getElementById("loginTab").onclick = () => switchAccountTab("login");
+document.getElementById("registerTab").onclick = () => switchAccountTab("register");
+document.getElementById("accountLoginBack").onclick = () => accounts.length ? showScreen("accountChooserScreen") : showScreen("betaNoticeScreen");
+document.getElementById("accountRegisterBack").onclick = () => accounts.length ? showScreen("accountChooserScreen") : showScreen("betaNoticeScreen");
+document.getElementById("accountLoginBtn").onclick = () => {
+  const email = document.getElementById("accountLoginEmail").value.trim().toLowerCase();
+  const password = document.getElementById("accountLoginPassword").value;
+  const err = document.getElementById("accountLoginError"); err.textContent = "";
+  if (!validEmail(email)) { err.textContent = "Wpisz poprawny adres email."; return; }
+  const acc = accounts.find(a => a.email === email);
+  if (!acc || acc.password !== hashLocalPassword(password)) { err.textContent = "Nieprawidłowy email lub hasło."; return; }
+  selectedAccountEmail = email;
+  document.getElementById("betaNoticeScreen").classList.remove("open");
+  showScreen("betaNoticeScreen");
+};
+document.getElementById("accountRegisterNext").onclick = () => {
+  const email = document.getElementById("accountRegisterEmail").value.trim().toLowerCase();
+  const password = document.getElementById("accountRegisterPassword").value;
+  const password2 = document.getElementById("accountRegisterPassword2").value;
+  const err = document.getElementById("accountRegisterError"); err.textContent = "";
+  if (!validEmail(email)) { err.textContent = "Wpisz poprawny adres email."; return; }
+  if (accounts.some(a => a.email === email)) { err.textContent = "Ten email jest już zapisany. Zaloguj się na istniejące konto."; return; }
+  if (password.length < 6) { err.textContent = "Hasło musi mieć co najmniej 6 znaków."; return; }
+  if (password !== password2) { err.textContent = "Hasła nie są takie same."; return; }
+  pendingAccount = { email, password: hashLocalPassword(password) };
+  document.getElementById("profileFirstName").value = "";
+  document.getElementById("profileLastName").value = "";
+  document.getElementById("profileBirthDate").value = "";
+  document.getElementById("personalDataError").textContent = "";
+  showScreen("personalDataScreen");
+};
+document.getElementById("personalDataBack").onclick = () => showScreen("accountScreen");
+document.getElementById("personalDataSave").onclick = () => {
+  const firstName = document.getElementById("profileFirstName").value.trim();
+  const lastName = document.getElementById("profileLastName").value.trim();
+  const birthDate = document.getElementById("profileBirthDate").value;
+  const err = document.getElementById("personalDataError"); err.textContent = "";
+  if (!firstName || !lastName || !birthDate) { err.textContent = "Uzupełnij imię, nazwisko i datę urodzenia."; return; }
+  const today = new Date().toISOString().slice(0,10);
+  if (birthDate > today) { err.textContent = "Data urodzenia nie może być z przyszłości."; return; }
+  if (!pendingAccount) { showScreen("accountScreen"); return; }
+  accounts.push({ ...pendingAccount, firstName, lastName, birthDate, created: Date.now() });
+  if (!saveAccounts()) { err.textContent = "Nie udało się zapisać profilu w tej przeglądarce."; return; }
+  pendingAccount = null; selectedAccountEmail = accounts[accounts.length - 1].email;
+  showScreen("betaNoticeScreen");
+};
 
 // ---- Kariera: profil firmy zapisany w przeglądarce ----
 const PROFILE_KEY = "forgetech.career.profile.v1";
@@ -1911,13 +2206,22 @@ function isImgData(x) { return typeof x === "string" && /^data:image\/(jpeg|png|
 function esc(t) {
   return String(t).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 }
+const DIFFICULTIES = {
+  easy: { label: "Łatwy", multiplier: 1 },
+  medium: { label: "Średni", multiplier: 2 },
+  hard: { label: "Trudny", multiplier: 4 }
+};
+function difficultyMultiplier() {
+  return DIFFICULTIES[career && career.difficulty ? career.difficulty : "easy"]?.multiplier || 1;
+}
+
 function loadProfile() {
   try {
     const raw = localStorage.getItem(PROFILE_KEY);
     if (!raw) return null;
     const p = JSON.parse(raw);
     if (p && typeof p.name === "string" && typeof p.company === "string") {
-      return { name: p.name, company: p.company, photo: isImgData(p.photo) ? p.photo : null, created: p.created || 0 };
+      return { name: p.name, company: p.company, photo: isImgData(p.photo) ? p.photo : null, created: p.created || 0, difficulty: ["easy", "medium", "hard"].includes(p.difficulty) ? p.difficulty : "easy" };
     }
   } catch (e) { storageFailed = true; }
   return null;
@@ -1963,11 +2267,11 @@ function renderCareerBar() {
   }
   main.appendChild(info);
   const foot = document.createElement("div"); foot.className = "cb-foot";
-  const date = document.createElement("div"); date.className = "cb-date"; date.textContent = "📅 " + fmtDate(career.date);
+  const date = document.createElement("div"); date.className = "cb-date"; date.textContent = "📅 Dzień " + fmtDate(career.date);
   const fans = infoChip("fans", "👥 Fani: " + career.fans, "👥 Fani",
     "<p>Fani to osoby, które lubią Twoją firmę. Każdy stworzony komputer dodaje nowych fanów, a im masz ich więcej, tym więcej osób kupuje Twoje produkty.</p>");
-  const turn = document.createElement("button"); turn.className = "turn-btn"; turn.textContent = "▶ Następna tura";
-  turn.onclick = nextTurn;
+  const turn = document.createElement("button"); turn.className = "turn-btn"; turn.textContent = gameRunning ? "⏸ Pauza" : "▶ Graj";
+  turn.onclick = toggleGameClock;
   foot.appendChild(date); foot.appendChild(fans); foot.appendChild(turn);
   bar.appendChild(main); bar.appendChild(foot);
   bar.classList.add("show");
@@ -1975,12 +2279,12 @@ function renderCareerBar() {
 }
 
 let gameMode = null;
-function enterGame(mode) {
+function enterGame(mode, newDifficulty) {
   document.body.classList.remove("in-menu");
   showScreen(null);
   if (gameMode !== mode) {
     gameMode = mode;
-    if (mode === "career") { career = loadCareer() || newCareer(); careerDirty = false; currentCat = "computer"; }
+    if (mode === "career") { const saved = loadCareer(); career = saved || newCareer(newDifficulty || careerProfile?.difficulty || "easy"); careerDirty = false; currentCat = "computer"; }
     else { career = null; careerDirty = false; }
     initBuild();
     renderAll();
@@ -1992,10 +2296,21 @@ function enterGame(mode) {
   badge.className = "mode-badge " + mode;
   document.getElementById("drawerMode").textContent = label;
   renderCareerBar();
+  translateGameChrome();
   document.getElementById("gameRoot").style.display = "";
+  if (mode === "career") {
+    startBackgroundMusic();
+    stopGameClock();
+    if (!career.tutorialSeen) setTimeout(showCareerTutorial, 120);
+  } else {
+    stopGameClock();
+    stopBackgroundMusic();
+  }
   window.scrollTo(0, 0);
 }
 function leaveToMenu() {
+  stopGameClock();
+  stopBackgroundMusic();
   closeModal();
   document.body.classList.remove("career-mode");
   document.getElementById("gameRoot").style.display = "none";
@@ -2016,6 +2331,7 @@ document.getElementById("careerWelcomeNext").onclick = () => {
   draftPhoto = null;
   document.getElementById("fName").value = "";
   document.getElementById("fCompany").value = "";
+  document.querySelector('input[name="difficulty"][value="easy"]').checked = true;
   document.getElementById("formError").textContent = "";
   const av = document.getElementById("avatarPreview");
   av.innerHTML = ""; av.textContent = "📷";
@@ -2061,11 +2377,12 @@ document.getElementById("careerCreate").onclick = () => {
     document.getElementById("formError").textContent = "Wpisz imię i nazwisko oraz nazwę firmy.";
     return;
   }
-  careerProfile = { name, company, photo: draftPhoto, created: Date.now() };
+  const difficulty = document.querySelector('input[name="difficulty"]:checked')?.value || "easy";
+  careerProfile = { name, company, photo: draftPhoto, created: Date.now(), difficulty };
   saveProfile(careerProfile);
   clearCareerSave();   // nowa firma = nowa gra
   gameMode = null;     // świeży projekt w trybie Kariera
-  enterGame("career");
+  enterGame("career", difficulty);
 };
 
 
@@ -2074,6 +2391,9 @@ const SAVE_KEY = "forgetech.career.save.v1";
 let career = null;
 let careerDirty = false;
 let prodDraft = null;
+let gameTimer = null;
+let gameRunning = false;
+const GAME_DAY_MS = 3000;
 function isCareer() { return gameMode === "career" && !!career; }
 
 // Punkty technologiczne: najsłabsze części są za 0, kolejne coraz droższe (lista jest posortowana od najsłabszej).
@@ -2096,17 +2416,21 @@ function initMarketScores() {
   RIVAL_BRANDS.forEach(name => { scores[name] = Math.round(40 + Math.random() * 110); });
   return scores;
 }
-function newCareer() {
+function addYears(d, years) {
+  const y = d.y + years;
+  const maxDay = new Date(y, d.m, 0).getDate();
+  return { d: Math.min(d.d, maxDay), m: d.m, y };
+}
+function newCareer(difficulty = "easy") {
   return {
     money: 25000, tp: 0, fans: 0, date: { d: 14, m: 12, y: 2012 }, unlocked: {}, products: [], nextId: 1,
-    loan: { balance: 0, rate: 0.08, missedTurns: 0, paidThisTurn: false },
+    difficulty: DIFFICULTIES[difficulty] ? difficulty : "easy",
+    loan: { principal: 0, balance: 0, dueDate: null },
     history: [],
+    monthRevenue: 0, monthSold: 0,
+    tutorialSeen: false,
     marketScores: initMarketScores(),
-    builtSignatures: {},
-    offices: [ { level: 1, capacity: 3, owned: true } ],
-    employees: [],
-    employeePool: [],
-    pendingBuilds: []
+    builtSignatures: {}, company: {office:1,employees:[],nextEmployeeId:1,employeeOffers:[],offerMonth:null,buildQueue:[],nextBuildId:1,ads:{active:false,budget:0,offer:null,remainingDays:0}}
   };
 }
 function numOr(x, d) { const n = Number(x); return isFinite(n) ? n : d; }
@@ -2114,7 +2438,7 @@ function loadCareer() {
   try {
     const raw = localStorage.getItem(SAVE_KEY);
     if (!raw) return null;
-    const sv = JSON.parse(raw), c = newCareer();
+    const sv = JSON.parse(raw), c = newCareer(["easy", "medium", "hard"].includes(sv.difficulty) ? sv.difficulty : (careerProfile?.difficulty || "easy"));
     c.money = numOr(sv.money, c.money);
     c.tp = Math.max(0, Math.floor(numOr(sv.tp, 0)));
     c.fans = Math.max(0, Math.floor(numOr(sv.fans, 0)));
@@ -2137,9 +2461,19 @@ function loadCareer() {
     }
     c.nextId = Math.max(Math.floor(numOr(sv.nextId, 1)), c.products.reduce((m, p) => Math.max(m, p.id + 1), 1));
     if (sv.loan && typeof sv.loan === "object") {
-      c.loan.balance = Math.max(0, numOr(sv.loan.balance, 0));
-      c.loan.missedTurns = Math.max(0, Math.floor(numOr(sv.loan.missedTurns, 0)));
+      c.loan.principal = Math.max(0, numOr(sv.loan.principal, 0));
+      c.loan.balance = Math.max(0, numOr(sv.loan.balance, c.loan.principal));
+      c.loan.dueDate = sv.loan.dueDate && typeof sv.loan.dueDate === "object"
+        ? { d: Math.max(1, Math.floor(numOr(sv.loan.dueDate.d, 14))), m: Math.min(12, Math.max(1, Math.floor(numOr(sv.loan.dueDate.m, 12)))), y: Math.floor(numOr(sv.loan.dueDate.y, 2013)) }
+        : (c.loan.balance > 0 ? addYears(c.date, 1) : null);
+      // Stare zapisy nie miały terminu rocznego ani marży 1,5%, więc zachowujemy saldo i
+      // przypisujemy im nowy termin bez naliczania dawnych kar za tury.
+      if (c.loan.principal <= 0 && c.loan.balance > 0) c.loan.principal = c.loan.balance;
     }
+    c.difficulty = ["easy", "medium", "hard"].includes(sv.difficulty) ? sv.difficulty : c.difficulty;
+    c.monthRevenue = Math.max(0, numOr(sv.monthRevenue, 0));
+    c.monthSold = Math.max(0, Math.floor(numOr(sv.monthSold, 0)));
+    c.tutorialSeen = !!sv.tutorialSeen;
     if (Array.isArray(sv.history)) {
       c.history = sv.history.slice(-36).map(h => ({
         date: String(h.date || "").slice(0, 12), revenue: Math.max(0, numOr(h.revenue, 0)),
@@ -2153,11 +2487,13 @@ function loadCareer() {
     if (sv.builtSignatures && typeof sv.builtSignatures === "object") {
       Object.keys(sv.builtSignatures).forEach(k => { c.builtSignatures[String(k).slice(0, 300)] = Math.max(0, Math.floor(numOr(sv.builtSignatures[k], 0))); });
     }
-    if (Array.isArray(sv.offices)) c.offices = sv.offices.map(o => ({ level:Number(o.level)||1, capacity:Number(o.capacity)||3, owned:!!o.owned }));
-    if (!c.offices.length) c.offices = [{level:1,capacity:3,owned:true}];
-    if (Array.isArray(sv.employees)) c.employees = sv.employees.slice(0,100);
-    if (Array.isArray(sv.employeePool)) c.employeePool = sv.employeePool.slice(0,10);
-    if (Array.isArray(sv.pendingBuilds)) c.pendingBuilds = sv.pendingBuilds.slice(0,300);
+    if (sv.company && typeof sv.company === "object") {
+      c.company.office=Math.min(5,Math.max(1,Math.floor(numOr(sv.company.office,1))));
+      c.company.nextEmployeeId=Math.max(1,Math.floor(numOr(sv.company.nextEmployeeId,1)));
+      c.company.employees=Array.isArray(sv.company.employees)?sv.company.employees.slice(0,35).map(e=>({id:Math.max(1,Math.floor(numOr(e.id,1))),name:String(e.name||"Pracownik").slice(0,40),level:Math.min(50,Math.max(1,Math.floor(numOr(e.level,1))))})):[];
+      c.company.buildQueue=Array.isArray(sv.company.buildQueue)?sv.company.buildQueue.slice(0,20).map(q=>{const qty=Math.max(1,Math.floor(numOr(q.qty,1))),done=Math.min(qty,Math.max(0,Math.floor(numOr(q.done,0))));return {...q,qty,done,totalWork:qty,remaining:Math.max(0,qty-done)}}):[];
+      if(sv.company.ads){const a=sv.company.ads;c.company.ads={active:!!a.active,budget:Math.max(0,numOr(a.budget,0)),offer:a.offer||null,remainingDays:Math.max(0,Math.floor(numOr(a.remainingDays,0)))};}
+    }
     return c;
   } catch (e) { storageFailed = true; return null; }
 }
@@ -2181,6 +2517,12 @@ window.addEventListener("beforeunload", (e) => {
 function pad2(n) { return String(n).padStart(2, "0"); }
 function fmtDate(d) { return pad2(d.d) + "." + pad2(d.m) + "." + d.y; }
 function addMonth(d) { return d.m === 12 ? { d: d.d, m: 1, y: d.y + 1 } : { d: d.d, m: d.m + 1, y: d.y }; }
+function daysInMonth(d) { return new Date(d.y, d.m, 0).getDate(); }
+function addDay(d) {
+  const dim = daysInMonth(d);
+  if (d.d < dim) return { d: d.d + 1, m: d.m, y: d.y };
+  return d.m === 12 ? { d: 1, m: 1, y: d.y + 1 } : { d: 1, m: d.m + 1, y: d.y };
+}
 function fmtMoney(n) { return Math.round(n).toLocaleString("pl-PL"); }
 function roundNice(n) { return Math.max(10, Math.round(n / 10) * 10); }
 
@@ -2237,11 +2579,14 @@ function expectedMonthly(sc, price, fans, age, ratingMult, dupMult) {
   return audience * appeal * value * reach * decay * ratingMult * dupMult;
 }
 function simulateSales(p) {
-  const mean = expectedMonthly(p.score, p.price, career.fans, p.age, p.ratingMult, p.dupMult);
+  const adBoost = career.company?.ads?.active && career.company.ads.offer ? (1 + Number(career.company.ads.offer.boost || 0) / 100) : 1;
+  const meanMonthly = expectedMonthly(p.score, p.price, career.fans, p.age, p.ratingMult, p.dupMult) * adBoost;
+  const diff = difficultyMultiplier();
+  const meanDaily = meanMonthly / (30 * diff);
   let r = 0.5 + Math.random();                       // rozrzut 50%–150%
   if (Math.random() < 0.08) r *= 1.8;                 // czasem hit
   else if (Math.random() < 0.08) r *= 0.3;            // czasem wtopa
-  return Math.max(0, Math.round(mean * r));
+  return Math.max(0, Math.round(meanDaily * r));
 }
 
 // ---- Zakup podzespołu za punkty technologiczne ----
@@ -2261,81 +2606,6 @@ function askBuyPart(part) {
       { label: "Tak", kind: "primary", onClick: () => { career.tp -= part.tp; career.unlocked[part.id] = true; markDirty(); renderAll(); renderCareerBar(); } },
       { label: "Anuluj", kind: "secondary" }
     ]);
-}
-
-// ==================== SYSTEM BUDOWY / FIRMA ====================
-const OFFICE_LEVELS = [
-  {level:1, capacity:3, cost:0, name:"Podstawowe"},
-  {level:2, capacity:5, cost:150000, name:"Małe"},
-  {level:3, capacity:10, cost:450000, name:"Średnie"},
-  {level:4, capacity:20, cost:1200000, name:"Duże"},
-  {level:5, capacity:35, cost:3000000, name:"Główne"}
-];
-function recognitionLevel() {
-  return Math.max(1, Math.min(50, 1 + Math.floor(Math.max(0, career.fans) / 500)));
-}
-function refreshEmployeePool() {
-  const lvl = recognitionLevel();
-  const names = ["Adam Kowal","Maja Nowak","Kacper Wrona","Oliwia Lis","Jakub Zając","Natalia Król","Szymon Mazur","Julia Kaczmarek"];
-  career.employeePool = Array.from({length:5}, (_,i) => ({
-    id: Date.now()+"-"+i+"-"+Math.random().toString(36).slice(2,7), name:names[Math.floor(Math.random()*names.length)],
-    level: Math.max(1, Math.min(50, lvl + Math.floor(Math.random()*7)-3))
-  }));
-}
-function employeeCapacity() { return career.offices.filter(o=>o.owned).reduce((s,o)=>s+o.capacity,0); }
-function currentEmployees() { return career.employees.length; }
-function buildRate() { return career.employees.reduce((s,e)=>s + Math.max(1, Number(e.level)||1),0); }
-function ptPerFour(level) { return Math.max(2, Math.min(10, Math.round(2 + (level-1)*8/49))); }
-function ensureEmployeePool() { if (!career.employeePool || !career.employeePool.length) refreshEmployeePool(); }
-function companyHtml() {
-  const owned = career.offices.filter(o=>o.owned).map(o=>o.level); const next = OFFICE_LEVELS.find(o=>!owned.includes(o.level));
-  return `<p class="prod-hint">Firma zarządza miejscami pracy, pracownikami i produkcją komputerów. Komputery są teraz budowane przez pracowników i nie trafiają od razu do magazynu.</p>
-    <div class="company-grid">
-      <div class="company-card"><b>📦 Magazyn</b><p>Gotowe: <b>${career.products.reduce((a,p)=>a+p.stock,0)}</b> szt.</p><p>W budowie: <b>${career.pendingBuilds.reduce((a,p)=>a+p.remaining,0)}</b> szt.</p></div>
-      <div class="company-card"><b>🏢 Biura</b><p>${currentEmployees()} / ${employeeCapacity()} miejsc zajętych</p><p class="dim">Posiadane: ${owned.length}/5</p></div>
-      <div class="company-card"><b>👷 Pracownicy</b><p>${currentEmployees()} zatrudnionych</p><p>Poziom rozpoznawalności: <b>${recognitionLevel()}/50</b></p></div>
-      <div class="company-card"><b>📣 Reklamy</b><p>System reklam jest przygotowany pod przyszłą rozbudowę.</p></div>
-    </div>
-    <div class="prod-block"><div class="prod-title">🏢 Biura</div>${officeHtml()}</div>
-    <div class="prod-block"><div class="prod-title">👷 Pracownicy</div>${employeesHtml()}</div>`;
-}
-function officeHtml() {
-  const owned = new Set(career.offices.filter(o=>o.owned).map(o=>o.level));
-  return `<div class="company-grid">${OFFICE_LEVELS.map(o=>`<div class="company-card office-card"><h3>${o.level}. ${o.name}</h3><div>${o.capacity} miejsc</div><div class="office-price">${o.cost ? fmtMoney(o.cost)+" PLN" : "DARMOWE"}</div>${owned.has(o.level)?`<button class="modal-btn secondary" disabled>Posiadane</button>`:`<button class="modal-btn primary" data-office="${o.level}" ${currentEmployees()>employeeCapacity() ? "disabled":""}>Kup biuro</button>`}</div>`).join("")}</div>`;
-}
-function employeesHtml() {
-  ensureEmployeePool();
-  const cap=employeeCapacity(), count=currentEmployees(), lvl=recognitionLevel();
-  const hired = career.employees.map((e,i)=>`<div class="employee-row"><div>👷 <b>${esc(e.name)}</b><div class="employee-meta">Poziom ${e.level} · ${ptPerFour(e.level)} PT / 4 zbudowane komputery</div></div><span>${i+1}/${cap}</span></div>`).join("") || `<p class="dim">Nie masz jeszcze pracowników.</p>`;
-  const pool = career.employeePool.map(e=>`<div class="employee-row"><div><b>${esc(e.name)}</b><div class="employee-meta">Poziom ${e.level}/50 · wymagane rozpoznawalność: do poziomu ${lvl}</div></div><button class="modal-btn primary" style="max-width:110px" data-hire="${esc(e.id)}" ${count>=cap?"disabled":""}>Zatrudnij</button></div>`).join("");
-  return `<p class="prod-hint">Co miesiąc pojawia się nowa pula pracowników. Ich poziom rośnie wraz z rozpoznawalnością firmy. Im wyższy poziom, tym szybciej budują i więcej PT dają za każde 4 zbudowane komputery.</p><p><b>Tempo budowy:</b> ${buildRate()} szt./mies. · <b>Miejsca:</b> ${count}/${cap}</p><div class="prod-block"><b>Obecni pracownicy</b>${hired}</div><div class="prod-block"><b>Nowa pula na ten miesiąc</b>${pool}</div>`;
-}
-function bindCompanyActions() {
-  document.querySelectorAll('[data-office]').forEach(btn=>btn.onclick=()=>{
-    const o=OFFICE_LEVELS.find(x=>x.level===Number(btn.dataset.office)); if(!o || career.money<o.cost) return openModal("💸 Za mało pieniędzy",`<p>Biuro kosztuje <b>${fmtMoney(o.cost)} PLN</b>, a masz <b>${fmtMoney(career.money)} PLN</b>.</p>`,false);
-    career.money-=o.cost; career.offices.push({level:o.level,capacity:o.capacity,owned:true}); markDirty(); renderCareerBar(); openCompanyPanel(); playSuccessSound();
-  });
-  document.querySelectorAll('[data-hire]').forEach(btn=>btn.onclick=()=>{
-    const e=career.employeePool.find(x=>x.id===btn.dataset.hire); if(!e) return;
-    if(currentEmployees()>=employeeCapacity()) return openModal("🏢 Brak miejsca",`<p>Najpierw kup większe biuro.</p>`,false);
-    career.employees.push(e); career.employeePool=career.employeePool.filter(x=>x.id!==e.id); markDirty(); openCompanyPanel(); playSuccessSound();
-  });
-}
-function openCompanyPanel(){ openFullScreenModal("🏢 Firma", companyHtml(), false); bindCompanyActions(); }
-function openEmployeesPanel(){ ensureEmployeePool(); openFullScreenModal("👷 Pracownicy", employeesHtml(), false); document.querySelectorAll('[data-hire]').forEach(btn=>btn.onclick=()=>{ const e=career.employeePool.find(x=>x.id===btn.dataset.hire); if(!e)return; if(currentEmployees()>=employeeCapacity())return openModal("🏢 Brak miejsca","<p>Najpierw kup większe biuro.</p>",false); career.employees.push(e); career.employeePool=career.employeePool.filter(x=>x.id!==e.id); markDirty(); openEmployeesPanel(); playSuccessSound(); }); }
-function processConstruction() {
-  if(!career.pendingBuilds.length || !career.employees.length) return {built:0,pt:0};
-  let capacity=Math.min(buildRate(), career.pendingBuilds.reduce((s,p)=>s+p.remaining,0)); let built=0, pt=0;
-  while(capacity>0 && career.pendingBuilds.length){
-    const p=career.pendingBuilds[0], take=Math.min(p.remaining,capacity); p.remaining-=take; capacity-=take; built+=take;
-    p.built=(p.built||0)+take;
-    const levelAvg=career.employees.length?career.employees.reduce((s,e)=>s+e.level,0)/career.employees.length:1;
-    const before=Math.floor((p.built-take)/4), after=Math.floor(p.built/4); pt+=(after-before)*ptPerFour(Math.round(levelAvg));
-    if(p.remaining<=0){
-      const idx=career.pendingBuilds.indexOf(p); career.pendingBuilds.splice(idx,1); p.product.stock=p.qty; p.product.made=p.qty; career.products.push(p.product); career.fans += Math.max(0, Number(p.fansGain)||0);
-    }
-  }
-  career.tp+=pt; return {built,pt};
 }
 
 // ---- Produkcja: okno 1 (nazwa + ilość), okno 2 (cena), zapis produktu ----
@@ -2438,105 +2708,133 @@ function openPriceDialog() {
   upd();
 }
 
-function produceProduct(d) {
-  const cat = CATEGORIES[currentCat], { price: unitCost, totals } = computeStats(), sc = buildScore();
-  const M = marketPrice(sc);
-  const sig = buildSignature();
-  const isDup = !!career.builtSignatures[sig];
-  career.builtSignatures[sig] = (career.builtSignatures[sig] || 0) + 1;
-  const stars = criticStars(sc, d.price, M, isDup);
-  const comment = criticComment(stars, isDup);
-  const ratingMult = 0.5 + 0.15 * stars;
-  const dupMult = isDup ? 0.35 : 1;
-  career.money -= unitCost * d.qty;
-  const dupFactor = isDup ? 0.15 : 1;
-  const gain = 0;
-  const fansGain = 0;
-  const product = {
-    id: career.nextId++, name: d.name, made: 0, stock: 0, sold: 0, price: d.price, unitCost, score: sc, age: 0, revenue: 0,
-    date: fmtDate(career.date), parts: cat.slotDefs.map(sd => sd.label + ": " + build[sd.key].name),
-    stars, criticComment: comment, ratingMult, dupMult, dup: isDup, sig
-  };
-  career.pendingBuilds.push({ id:"build-"+product.id, product, qty:d.qty, remaining:d.qty, built:0, fansGain });
-  markDirty();
-  prodDraft = null;
-  renderAll();
-  renderCareerBar();
-  const starsStr = "⭐".repeat(stars) + "☆".repeat(5 - stars);
-  openModal("✅ Wyprodukowano!",
-    `<p><b>${esc(d.name)}</b> × ${d.qty} szt. trafiło do magazynu.</p>
-     <p>🏭 Zlecono budowę <b>${d.qty} szt.</b>. Pracownicy będą budować je stopniowo.<br>🔬 PT będą przyznawane pracownikom za każde 4 faktycznie zbudowane komputery.</p>
-     <div class="prod-block"><div class="prod-title">📰 Opinia krytyków</div>
-       <p style="font-size:1.1rem;margin:0 0 4px">${starsStr} <b>(${stars}/5)</b></p>
-       <p class="dim">„${esc(comment)}”</p>
-       ${isDup ? '<p style="color:var(--danger);font-weight:700">⚠ To dokładnie ten sam zestaw części, który już wcześniej stworzyłeś! Rynek jest nim znudzony — mniejsza sprzedaż i prawie brak nowych fanów oraz punktów technologicznych.</p>' : ""}
-     </div>
-     <p class="dim">Budowa trwa przez kolejne miesiące. Szybkość zależy od liczby i poziomu pracowników.</p>`, false);
-  playSuccessSound();
-}
+function produceProduct(d){const cat=CATEGORIES[currentCat],{price:unitCost}=computeStats(),sc=buildScore(),M=marketPrice(sc),sig=buildSignature(),isDup=!!career.builtSignatures[sig];career.builtSignatures[sig]=(career.builtSignatures[sig]||0)+1;const stars=criticStars(sc,d.price,M,isDup),comment=criticComment(stars,isDup);career.money-=unitCost*d.qty;const work=Math.max(1,d.qty);career.company.buildQueue.push({id:career.company.nextBuildId++,name:d.name,qty:d.qty,done:0,remaining:work,totalWork:work,price:d.price,unitCost,score:sc,stars,criticComment:comment,ratingMult:.5+.15*stars,dupMult:isDup?.35:1,dup:isDup,sig,parts:cat.slotDefs.map(sd=>sd.label+": "+build[sd.key].name)});markDirty();prodDraft=null;renderAll();renderCareerBar();renderCompanyPanel();openModal("🏭 Produkcja rozpoczęta",`<p><b>${esc(d.name)}</b> × ${d.qty} trafiło do kolejki produkcyjnej.</p><p>⏱️ Szybkość zależy od liczby i poziomu pracowników.</p>`,false);playSuccessSound();}
+function officeData(){return[{level:1,places:3,cost:0},{level:2,places:5,cost:150000},{level:3,places:10,cost:450000},{level:4,places:20,cost:1200000},{level:5,places:35,cost:3000000}];}
+function companyEmployeeCapacity(){return officeData()[career.company.office-1].places}
+function employeeMonthlySpeed(level){const l=Math.min(50,Math.max(1,Number(level)||1));return +(5+(l-1)*0.2).toFixed(1)}
+function employeeMonthlyWage(level){const l=Math.min(50,Math.max(1,Number(level)||1));return Math.round(300+(l-1)*35)}
+function companyMonthlySpeed(){return career.company.employees.reduce((s,e)=>s+employeeMonthlySpeed(e.level),0)}
+function companyMonthlyPayroll(){return career.company.employees.reduce((s,e)=>s+employeeMonthlyWage(e.level),0)}
+function employeeWorkPerDay(){return companyMonthlySpeed()/30}
+function employeePtLevel(l){return Math.max(2,Math.min(10,Math.floor((Number(l)||1)/5)+2))}
+function ensureEmployeeOffers(){const key=career.date.y+"-"+career.date.m;if(career.company.offerMonth===key&&career.company.employeeOffers.length)return;career.company.offerMonth=key;const names=["Adam","Bartek","Celina","Daniel","Emilia","Filip","Grzegorz","Hanna","Igor","Julia","Kamil","Lena"];career.company.employeeOffers=Array.from({length:1+Math.floor(Math.random()*3)},(_,i)=>({id:Date.now()+i,name:names[Math.floor(Math.random()*names.length)],level:Math.min(50,Math.max(1,Math.floor(1+career.fans/5000+Math.random()*5)))}))}
+function completeBuild(q){const diff=difficultyMultiplier(),avg=career.company.employees.length?Math.round(career.company.employees.reduce((s,e)=>s+employeePtLevel(Number(e.level)||1),0)/career.company.employees.length):0,totalPt=avg*Math.floor(q.qty/4),fansGain=Math.max(q.dup?0:1,Math.round((q.qty*(.5+2*q.score)*(q.dup?.15:1))/diff));career.tp+=totalPt;career.fans+=fansGain;career.products.push({id:career.nextId++,name:q.name,made:q.qty,stock:q.qty,sold:0,price:q.price,unitCost:q.unitCost,score:q.score,age:0,revenue:0,date:fmtDate(career.date),parts:q.parts,stars:q.stars,criticComment:q.criticComment,ratingMult:q.ratingMult,dupMult:q.dupMult,dup:q.dup,sig:q.sig});markDirty();return{totalPt,fansGain}}
+function processBuildQueue(){if(!isCareer()||!career.company.buildQueue.length)return;const q=career.company.buildQueue[0],dailyCapacity=employeeWorkPerDay();if(dailyCapacity<=0)return;q.remaining=Math.max(0,q.remaining-dailyCapacity);while(q.remaining<=0&&q.done<q.qty){q.done++;if(q.done<q.qty)q.remaining=1}if(q.done>=q.qty){const r=completeBuild(q);career.company.buildQueue.shift();openModal("✅ Produkcja zakończona",`<p><b>${esc(q.name)}</b> × ${q.qty} szt. trafiło do magazynu.</p><p>🔬 +${r.totalPt} PT · 👥 +${r.fansGain} fanów</p>`,false);renderCompanyPanel()}markDirty()}
+function warehouseProductsHtml(){const products=career.products.slice().reverse();if(!products.length)return '<p class="dim">Magazyn jest pusty.</p>';return products.map(p=>`<div class="build-row"><div><b>${esc(p.name)}</b><br><small>📦 ${p.stock} szt. · sprzedano ${p.sold} szt.</small></div><b>${fmtMoney(p.price)} PLN</b></div>`).join('')}
+function showWarehouse(){openCompanyPanel('warehouse')}
+function companyWarehouseHtml(){const q=career.company.buildQueue,stock=career.products.reduce((s,p)=>s+p.stock,0);return `<div class="company-grid"><div class="company-card"><h3>📦 Magazyn</h3><div class="company-stat">${stock} szt.</div><button class="company-mini-btn" onclick="showWarehouse()">Zobacz</button></div><div class="company-card"><h3>🏭 Produkcja</h3><div class="company-stat">${q.length} zadań</div><p>Szybkość: ${companyMonthlySpeed().toFixed(1)} komputerów / miesiąc</p></div></div><div class="company-card" style="margin-top:12px"><h3>🔨 Kolejka</h3>${q.length?q.map(x=>{const pct=Math.max(0,Math.min(100,(1-x.remaining/x.totalWork)*100));return `<div class="build-row"><div style="flex:1"><b>${esc(x.name)}</b> · ${x.done}/${x.qty}<div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div></div><b>${Math.round(pct)}%</b></div>`}).join(''):'<p class="dim">Brak aktywnej produkcji.</p>'}</div>`}
+function companyOfficesHtml(){const d=officeData(),cur=d[career.company.office-1];return `<div class="company-grid">${d.map(o=>`<div class="company-card"><h3>🏢 Biuro ${o.level}</h3><div class="company-stat">${o.places} miejsc</div><p>${o.cost?fmtMoney(o.cost)+' PLN':'Darmowe'}</p><button class="company-action" ${o.level!==career.company.office+1?'':'onclick="upgradeOffice('+o.level+')"'}>${o.level<=career.company.office?'Posiadane':o.level===career.company.office+1?'Kup':'Zablokowane'}</button></div>`).join('')}</div><div class="company-card" style="margin-top:12px"><b>Obecne: Biuro ${cur.level}</b> · ${career.company.employees.length}/${cur.places} pracowników</div>`}
+function companyEmployeesHtml(){ensureEmployeeOffers();const cap=companyEmployeeCapacity();return `<div class="company-card"><h3>👷 Pracownicy</h3><p>${career.company.employees.length}/${cap} miejsc · <b>${companyMonthlySpeed().toFixed(1)} komputerów/mies.</b> · <b>${fmtMoney(companyMonthlyPayroll())} PLN/mies.</b></p>${career.company.employees.length?career.company.employees.map(e=>`<div class="employee-row"><span><b>${esc(e.name||'Pracownik')}</b><br><small>Poziom ${e.level||1}/50 · ${employeeMonthlySpeed(e.level)} komputerów/mies. · ${employeePtLevel(e.level)} PT / 4 komputery · ${fmtMoney(employeeMonthlyWage(e.level))} PLN/mies.</small></span><button class="company-action secondary" onclick="fireEmployee(${e.id})">Zwolnij</button></div>`).join(''):'<p class="dim">Nie masz jeszcze pracowników.</p>'}</div><div class="company-card" style="margin-top:12px"><h3>📋 Kandydaci w tym miesiącu</h3>${career.company.employeeOffers.map((e,i)=>`<div class="employee-row"><span><b>${e.name}</b><br><small>Poziom ${e.level}/50 · ${employeeMonthlySpeed(e.level)} komputerów/mies. · ${fmtMoney(employeeMonthlyWage(e.level))} PLN/mies.</small></span><button class="company-action" ${career.company.employees.length>=cap?'disabled':''} onclick="hireEmployee(${i})">Zatrudnij</button></div>`).join('')}</div>`}
+const AD_OFFERS=[{name:'Start lokalny',cost:5000,boost:5,days:30},{name:'Mała kampania',cost:15000,boost:10,days:30},{name:'Rozpoznawalność',cost:50000,boost:15,days:60},{name:'Duża kampania',cost:150000,boost:25,days:90},{name:'Ogólnokrajowa',cost:350000,boost:35,days:180},{name:'Premium',cost:750000,boost:50,days:270},{name:'Mega kampania',cost:1500000,boost:75,days:365}];
+function companyAdsHtml(){const a=career.company.ads;return `<div class="company-grid">${AD_OFFERS.map((o,i)=>`<div class="company-card"><h3>📣 ${o.name}</h3><div class="company-stat">${fmtMoney(o.cost)} PLN</div><p><b>+${o.boost}% sprzedaży</b> przez ${o.days>=365?'rok':o.days>=30?Math.round(o.days/30)+' mies.':o.days+' dni'}</p><button class="company-action" onclick="buyAd(${i})" ${a.active?'disabled':''}>${a.active?'Aktywna reklama':'Kup'}</button></div>`).join('')}</div>${a.active?`<div class="company-card" style="margin-top:12px"><h3>📢 Aktywna kampania</h3><p><b>${esc(a.offer.name)}</b> · +${a.offer.boost}% sprzedaży · pozostało ${a.remainingDays} dni.</p><button class="company-action secondary" onclick="cancelAd()">Zakończ kampanię</button></div>`:''}`}
+let companyTab='home';
+function companyHomeHtml(){const stock=career.products.reduce((s,p)=>s+p.stock,0),cap=companyEmployeeCapacity(),d=officeData()[career.company.office-1],a=career.company.ads;return `<div class="company-grid company-home-grid"><div class="company-card company-nav-card"><h3>📦 Magazyn</h3><div class="company-stat">${stock} szt.</div><p>Komputery gotowe do sprzedaży.</p><button class="company-action" onclick="openCompanyPanel('warehouse')">Zobacz</button></div><div class="company-card company-nav-card"><h3>🏢 Biura</h3><div class="company-stat">Biuro ${d.level}</div><p>${career.company.employees.length}/${d.places} miejsc zajętych.</p><button class="company-action" onclick="openCompanyPanel('offices')">Otwórz</button></div><div class="company-card company-nav-card"><h3>👷 Pracownicy</h3><div class="company-stat">${career.company.employees.length}</div><p>${companyMonthlySpeed().toFixed(1)} komputerów/mies. · ${fmtMoney(companyMonthlyPayroll())} PLN/mies.</p><button class="company-action" onclick="openCompanyPanel('employees')">Otwórz</button></div><div class="company-card company-nav-card"><h3>📣 Reklamy</h3><div class="company-stat">${a.active?'Aktywna':'Brak kampanii'}</div><p>${a.active?`+${a.offer.boost}% sprzedaży · ${a.remainingDays} dni`:'Wybierz jedną z 7 ofert.'}</p><button class="company-action" onclick="openCompanyPanel('ads')">Otwórz</button></div></div>`}
+function renderCompanyPanel(){const el=document.getElementById('companyContent'),title=document.getElementById('companyTitle'),back=document.getElementById('companyBack');if(!el||!career)return;const f={home:companyHomeHtml,warehouse:companyWarehouseHtml,offices:companyOfficesHtml,employees:companyEmployeesHtml,ads:companyAdsHtml}[companyTab]||companyHomeHtml;el.innerHTML=f();const titles={home:'🏢 Firma',warehouse:'📦 Magazyn',offices:'🏢 Biura',employees:'👷 Pracownicy',ads:'📣 Reklamy'};title.textContent=titles[companyTab]||'🏢 Firma';back.style.display=companyTab==='home'?'none':'inline-flex'}
+function openCompanyPanel(tab='home'){if(!isCareer())return;companyTab=tab;document.getElementById('companyOverlay').classList.add('open');renderCompanyPanel()}
+function closeCompanyPanel(){document.getElementById('companyOverlay').classList.remove('open')}
+function upgradeOffice(l){const o=officeData()[l-1];if(!o||l!==career.company.office+1)return;if(career.money<o.cost){openModal("💰 Za mało pieniędzy",`<p>Biuro ${l} kosztuje <b>${fmtMoney(o.cost)} PLN</b>, a na koncie masz <b>${fmtMoney(career.money)} PLN</b>.</p><p>Brakuje Ci <b>${fmtMoney(o.cost-career.money)} PLN</b>.</p>`,false);return;}career.money-=o.cost;career.company.office=l;markDirty();renderCareerBar();renderCompanyPanel()}
+function hireEmployee(i){const e=career.company.employeeOffers[i];if(!e||career.company.employees.length>=companyEmployeeCapacity())return;career.company.employees.push({id:career.company.nextEmployeeId++,name:e.name,level:e.level});career.company.employeeOffers.splice(i,1);markDirty();renderCompanyPanel()}function fireEmployee(id){career.company.employees=career.company.employees.filter(e=>e.id!==id);markDirty();renderCompanyPanel()}
+function buyAd(i){const o=AD_OFFERS[i];if(!o)return;if(career.company.ads.active)return;if(career.money<o.cost){openModal("📣 Za mało pieniędzy",`<p>Reklama <b>${esc(o.name)}</b> kosztuje <b>${fmtMoney(o.cost)} PLN</b>, a na koncie masz <b>${fmtMoney(career.money)} PLN</b>.</p><p>Brakuje Ci <b>${fmtMoney(o.cost-career.money)} PLN</b>.</p>`,false);return;}career.money-=o.cost;career.company.ads={active:true,budget:o.cost,offer:{name:o.name,boost:o.boost,days:o.days},remainingDays:o.days};markDirty();renderCareerBar();renderCompanyPanel();openModal("📣 Reklama uruchomiona",`<p><b>${esc(o.name)}</b> daje <b>+${o.boost}% sprzedaży</b> przez ${o.days>=365?'rok':o.days>=30?Math.round(o.days/30)+' miesiące':o.days+' dni'}.</p>`,false)}
+function cancelAd(){career.company.ads={active:false,budget:0,offer:null,remainingDays:0};markDirty();renderCompanyPanel()}
+document.getElementById('companyClose').onclick=closeCompanyPanel;document.getElementById('companyBack').onclick=()=>openCompanyPanel('home');
 
-// ---- Następna tura (miesiąc) ----
-function nextTurn() {
-  career.date = addMonth(career.date);
-  const construction = processConstruction();
-  refreshEmployeePool();
+// ---- Codzienny zegar gry ----
+function refreshOpenMarketChart() {
+  const overlay = document.getElementById("modalOverlay");
+  const title = document.querySelector("#modalContent h2");
+  if (overlay.classList.contains("open") && title && title.textContent.includes("Wykres rynku")) {
+    document.getElementById("modalContent").innerHTML = `<h2>📈 Wykres rynku</h2>${chartHtml()}`;
+  }
+}
+function advanceDay() {
+  if (!isCareer()) return;
+  const oldDate = { ...career.date };
+  career.date = addDay(career.date);
+  processBuildQueue();
+  const newMonth = career.date.m !== oldDate.m || career.date.y !== oldDate.y;
   let total = 0, soldAll = 0;
-  const lines = [];
   career.products.forEach(p => {
-    p.age += 1;
     if (p.stock <= 0) return;
     const sold = Math.min(p.stock, simulateSales(p));
     p.stock -= sold; p.sold += sold;
     const rev = sold * p.price;
     p.revenue += rev; total += rev; soldAll += sold;
-    lines.push(`<div class="turn-line"><span>${esc(p.name)}</span><b>${sold} szt. · ${fmtMoney(rev)} PLN</b><small>w magazynie: ${p.stock}</small></div>`);
   });
   career.money += total;
+  career.monthRevenue = (career.monthRevenue || 0) + total;
+  career.monthSold = (career.monthSold || 0) + soldAll;
 
-  // Fani przybywają lub ubywają co miesiąc losowo, zależnie od średniej oceny krytyków.
+  // Fani i rywale aktualizują się codziennie.
   const ratedProducts = career.products.filter(p => typeof p.stars === "number");
   const avgStars = ratedProducts.length ? ratedProducts.reduce((s, p) => s + p.stars, 0) / ratedProducts.length : 3;
   const ratingFactor = (avgStars - 3) * 0.35;
-  const fanBase = career.fans * (0.01 + 0.03 * Math.random());
-  let fanDelta = Math.round(fanBase * (1 + ratingFactor) + (Math.random() * 14 - 6));
+  const fanBase = career.fans * (0.0007 + 0.002 * Math.random());
+  let fanDelta = Math.round(fanBase * (1 + ratingFactor) + (Math.random() * 2.2 - 1));
   if (!isFinite(fanDelta)) fanDelta = 0;
   career.fans = Math.max(0, career.fans + fanDelta);
 
-  // Ranking rynkowy: marki konkurencji losowo zyskują lub tracą co miesiąc.
   RIVAL_BRANDS.forEach(name => {
     const cur = career.marketScores[name] || 50;
-    const delta = cur * (Math.random() * 0.24 - 0.1);
-    career.marketScores[name] = Math.max(10, Math.min(260, Math.round(cur + delta)));
+    const difficulty = difficultyMultiplier();
+    const pressure = difficulty === 1 ? 0 : difficulty === 2 ? 0.012 : 0.025;
+    const delta = cur * (Math.random() * (0.08 + pressure) - (0.035 - pressure));
+    career.marketScores[name] = Math.max(10, Math.min(320, Math.round(cur + delta)));
   });
 
-  // Pożyczka: odsetki naliczane co miesiąc, a brak spłaty to dodatkowa kara odsetkowa.
-  let loanNote = "";
-  if (career.loan.balance > 0) {
-    const penalty = career.loan.paidThisTurn ? 0 : (career.loan.missedTurns >= 1 ? 0.05 : 0);
-    const rate = career.loan.rate + penalty;
-    const interest = Math.round(career.loan.balance * rate);
-    career.loan.balance += interest;
-    career.loan.missedTurns = career.loan.paidThisTurn ? 0 : career.loan.missedTurns + 1;
-    loanNote = `<div class="turn-line"><span>🏦 Odsetki od pożyczki${penalty ? " + kara za zwłokę" : ""}</span><b style="color:var(--danger)">+${fmtMoney(interest)} PLN długu</b></div>`;
-  }
-  career.loan.paidThisTurn = false;
+  // Produkty starzeją się raz na pełny miesiąc, więc zmiana zegara na dni nie przyspiesza ich zużycia.
+  career.products.forEach(p => {
+    p._ageDays = Math.max(0, Math.floor(numOr(p._ageDays, (p.age || 0) * 30)) + 1);
+    p.age = Math.floor(p._ageDays / 30);
+  });
 
-  // Historia sprzedaży — do zakładki Statystyki (zmiana % względem poprzedniego miesiąca).
-  const prevEntry = career.history[career.history.length - 1];
-  const changePct = prevEntry ? (prevEntry.revenue > 0 ? ((total - prevEntry.revenue) / prevEntry.revenue) * 100 : (total > 0 ? 100 : 0)) : null;
-  career.history.push({ date: fmtDate(career.date), revenue: total, sold: soldAll, changePct });
-  if (career.history.length > 36) career.history.shift();
+  if (career.loan.balance > 0 && career.loan.dueDate) {
+    if (career.date.y > career.loan.dueDate.y ||
+        (career.date.y === career.loan.dueDate.y && (career.date.m > career.loan.dueDate.m ||
+        (career.date.m === career.loan.dueDate.m && career.date.d > career.loan.dueDate.d)))) {
+      career.loan.overdue = true;
+    }
+  }
+
+  if (career.company?.ads?.active) {
+    career.company.ads.remainingDays = Math.max(0, (career.company.ads.remainingDays || 0) - 1);
+    if (career.company.ads.remainingDays === 0) career.company.ads = {active:false,budget:0,offer:null,remainingDays:0};
+  }
+
+  if (newMonth) {
+    const payroll = companyMonthlyPayroll();
+    if (payroll > 0) {
+      career.money -= payroll;
+      openModal("💼 Miesięczne wynagrodzenia", `<p>Wypłaty dla ${career.company.employees.length} pracowników kosztowały <b>${fmtMoney(payroll)} PLN</b>.</p><p>Stan konta po wypłatach: <b>${fmtMoney(career.money)} PLN</b>.</p>`, false);
+    }
+    const prevEntry = career.history[career.history.length - 1];
+    const changePct = prevEntry ? (prevEntry.revenue > 0 ? ((career.monthRevenue - prevEntry.revenue) / prevEntry.revenue) * 100 : (career.monthRevenue > 0 ? 100 : 0)) : null;
+    career.history.push({ date: fmtDate(oldDate), revenue: career.monthRevenue, sold: career.monthSold, changePct });
+    if (career.history.length > 36) career.history.shift();
+    career.monthRevenue = 0;
+    career.monthSold = 0;
+  }
 
   markDirty();
   renderCareerBar();
-  const hasStock = career.products.some(p => p.stock > 0);
-  const fanLine = `<div class="turn-line"><span>👥 Zmiana liczby fanów</span><b style="color:${fanDelta >= 0 ? "#0f8a48" : "var(--danger)"}">${fanDelta >= 0 ? "+" : ""}${fanDelta}</b></div>`;
-  const changeLine = changePct !== null ? `<p class="prod-hint">Sprzedaż względem poprzedniego miesiąca: <b style="color:${changePct >= 0 ? "#0f8a48" : "var(--danger)"}">${changePct >= 0 ? "+" : ""}${changePct.toFixed(0)}%</b></p>` : "";
-  const body = (lines.length
-    ? lines.join("") + `<div class="sum-total"><span>Przychód</span><span>${fmtMoney(total)} PLN</span></div>`
-    : `<p>${career.products.length ? "Magazyn jest pusty — nie ma czego sprzedawać." : "Nie masz jeszcze żadnych produktów. Zbuduj i wyprodukuj komputer."}</p>`)
-    + `<div class="turn-line"><span>🏭 Budowa komputerów</span><b>${construction.built} szt.</b><small>+${construction.pt} PT od pracowników · tempo: ${buildRate()} szt./mies.</small></div>` + fanLine + loanNote + changeLine;
-  openModal("📅 " + fmtDate(career.date), body + (lines.length && soldAll === 0 && hasStock ? "<p class=\"dim\">W tym miesiącu nikt nic nie kupił. Może cena jest za wysoka?</p>" : ""), false);
+  const dateEl = document.querySelector("#careerBar .cb-date");
+  if (dateEl) { dateEl.classList.add("day-tick"); setTimeout(() => dateEl.classList.remove("day-tick"), 400); }
+  refreshOpenMarketChart();
+}
+function startGameClock() {
+  if (!isCareer() || gameRunning) return;
+  gameRunning = true;
+  if (gameTimer) clearInterval(gameTimer);
+  gameTimer = setInterval(advanceDay, GAME_DAY_MS);
+  renderCareerBar();
+}
+function stopGameClock() {
+  gameRunning = false;
+  if (gameTimer) { clearInterval(gameTimer); gameTimer = null; }
+  if (isCareer()) renderCareerBar();
+}
+function toggleGameClock() {
+  if (!isCareer()) return;
+  if (gameRunning) stopGameClock(); else startGameClock();
 }
 
 // ---- Wyjście z gry (Kariera) ----
@@ -2588,34 +2886,51 @@ function statsHtml() {
     <p class="prof-line"><b>📥 Niesprzedane (magazyn):</b> ${unsold}</p>
     <p class="prof-line"><b>⭐ Średnia ocena krytyków:</b> ${avgRating ? avgRating.toFixed(1) + " / 5" : "brak ocen"}</p>
     <p class="prof-line"><b>👥 Fani:</b> ${career.fans}</p>
-    <div class="prod-block"><div class="prod-title">📅 Historia sprzedaży (ostatnie miesiące)</div>${rows || '<p class="dim">Brak jeszcze danych — zagraj kilka tur.</p>'}</div>
+    <p class="prof-line"><b>⚙️ Szybkość produkcji:</b> ${companyMonthlySpeed().toFixed(1)} komputerów / miesiąc</p>
+    <p class="prof-line"><b>💼 Wypłaty pracowników:</b> ${fmtMoney(companyMonthlyPayroll())} PLN / miesiąc</p>
+    <div class="prod-block"><div class="prod-title">📅 Historia sprzedaży (ostatnie miesiące)</div>${rows || '<p class="dim">Brak jeszcze danych — uruchom grę na kilka dni.</p>'}</div>
   `;
 }
 
 // ==================== FINANSE / POŻYCZKI ====================
+const MIN_LOAN = 50000;
+const MAX_LOAN = 500000;
 function loanCapacity() {
-  return Math.min(500000, Math.floor(career.money / 50000) * 100000);
+  const ownEquity = Math.max(0, career.money - (career.loan.balance || 0));
+  return Math.min(MAX_LOAN, Math.floor(ownEquity));
 }
-function loanAvailable() { return career.money >= 50000; }
+function loanAvailable() { return loanCapacity() >= MIN_LOAN && career.loan.balance <= 0; }
+function loanDueLabel(loan) {
+  if (!loan.dueDate) return "brak aktywnej pożyczki";
+  const overdue = !!loan.overdue;
+  return `${fmtDate(loan.dueDate)}${overdue ? " · termin minął" : " · termin spłaty"}`;
+}
 function financeHtml() {
-  const loan = career.loan, cap = loanCapacity(), avail = Math.max(0, cap - loan.balance), unlocked = loanAvailable();
+  const loan = career.loan, cap = loanCapacity(), avail = Math.max(0, cap), unlocked = loanAvailable();
   return `
     <p class="prof-line"><b>💰 Stan konta:</b> ${fmtMoney(career.money)} PLN</p>
     <div class="prod-block">
       <div class="prod-title">🏦 Pożyczka firmowa</div>
-      ${unlocked ? `
-        <p class="prod-hint">Aktualne zadłużenie: <b>${fmtMoney(loan.balance)} PLN</b> · odsetki: <b>${Math.round(loan.rate * 100)}%/mies.</b></p>
-        <p class="prod-hint">Dostępny limit: <b>${fmtMoney(avail)} PLN</b> (limit rośnie o 100 000 PLN za każde 50 000 PLN na koncie, maksymalnie 500 000 PLN)</p>
-        ${loan.missedTurns > 0 ? `<p class="prod-hint" style="color:var(--danger);font-weight:700">⚠ Zalegasz ze spłatą od ${loan.missedTurns} mies. — naliczana jest dodatkowa kara odsetkowa (+5%/mies.)!</p>` : ""}
+      ${loan.balance > 0 ? `
+        <p class="prod-hint">Pożyczony kapitał: <b>${fmtMoney(loan.principal)} PLN</b> · do oddania: <b>${fmtMoney(loan.balance)} PLN</b>.</p>
+        <p class="prod-hint">Termin spłaty: <b>${loanDueLabel(loan)}</b>. Do pożyczonej kwoty doliczono <b>1,5%</b>.</p>
+        <p class="prod-hint">Możesz wpłacać <b>dowolną kwotę</b> w dowolnym dniu, aż do całkowitej spłaty.</p>
         <div class="modal-actions">
-          <button class="modal-btn primary" id="btnTakeLoan" ${avail < 1000 ? "disabled" : ""}>Weź pożyczkę</button>
-          <button class="modal-btn secondary" id="btnRepayLoan" ${loan.balance < 1 ? "disabled" : ""}>Spłać</button>
+          <button class="modal-btn secondary" id="btnRepayLoan">Spłać</button>
         </div>
-      ` : `<p class="dim">Pożyczki odblokujesz, gdy będziesz mieć na koncie firmowym co najmniej 50 000 PLN.</p>`}
+      ` : `
+        <p class="prod-hint">Minimalna pożyczka: <b>${fmtMoney(MIN_LOAN)} PLN</b>. Maksymalnie możesz pożyczyć do <b>${fmtMoney(MAX_LOAN)} PLN</b> i nie więcej niż wynosi dostępny kapitał własny.</p>
+        ${unlocked ? `
+          <p class="prod-hint">Dostępna kwota: <b>${fmtMoney(avail)} PLN</b>. Termin spłaty każdej pożyczki: <b>1 rok</b>. Łączna kwota do oddania to pożyczone pieniądze + <b>1,5%</b>.</p>
+          <div class="modal-actions">
+            <button class="modal-btn primary" id="btnTakeLoan">Weź pożyczkę</button>
+          </div>
+        ` : `<p class="dim">Pożyczkę możesz uruchomić, gdy masz co najmniej 50 000 PLN dostępnego kapitału własnego.</p>`}
+      `}
     </div>
   `;
 }
-function openFinanceModal(fullScreen) {
+function openFinanceModal() {
   openModal("💰 Finanse", financeHtml(), false);
   const btnTake = document.getElementById("btnTakeLoan");
   const btnRepay = document.getElementById("btnRepayLoan");
@@ -2623,29 +2938,43 @@ function openFinanceModal(fullScreen) {
   if (btnRepay) btnRepay.onclick = openRepayLoanDialog;
 }
 function openTakeLoanDialog() {
-  const avail = Math.max(0, loanCapacity() - career.loan.balance);
+  const avail = Math.max(0, loanCapacity());
   const html = `
-    <p class="prod-hint">Dostępny limit pożyczki: <b>${fmtMoney(avail)} PLN</b>. Odsetki: ${Math.round(career.loan.rate * 100)}%/mies. — jeśli nie spłacisz w danym miesiącu, naliczy się dodatkowa kara.</p>
-    <label class="field">Kwota pożyczki (PLN)<input type="number" id="loanAmt" min="1" max="${avail}" step="100" inputmode="numeric" value="${Math.min(avail, 10000)}"></label>
+    <p class="prod-hint">Wybierz gotową kwotę albo wpisz własną co do złotówki. Minimalna kwota pożyczki to <b>${fmtMoney(MIN_LOAN)} PLN</b>.</p>
+    <div class="loan-quick">
+      ${[10000, 25000, 50000, 100000, 200000, 400000, 500000].map(v => `<button type="button" data-loan="${v}" ${v < MIN_LOAN ? "disabled title=\"Minimalna pożyczka to 50 000 PLN\"" : ""}>${fmtMoney(v / 1000)}k</button>`).join("")}
+    </div>
+    <label class="field">Kwota pożyczki (PLN)<input type="number" id="loanAmt" min="${MIN_LOAN}" max="${avail}" step="1" inputmode="numeric" value="${Math.min(avail, MIN_LOAN)}"></label>
     <div class="form-error" id="loanErr"></div>`;
   openModal("🏦 Weź pożyczkę", html, false, [
     { label: "Potwierdź", kind: "primary", onClick: () => {
       const v = Math.round(Number(document.getElementById("loanAmt").value));
-      if (!v || v < 1) { document.getElementById("loanErr").textContent = "Wpisz kwotę większą od zera."; return; }
-      if (v > avail) { document.getElementById("loanErr").textContent = "Za dużo — przekracza dostępny limit."; return; }
-      career.loan.balance += v; career.money += v; markDirty(); renderCareerBar();
+      if (!v || v < MIN_LOAN) { document.getElementById("loanErr").textContent = "Minimalna kwota pożyczki to 50 000 PLN."; return; }
+      if (v > MAX_LOAN) { document.getElementById("loanErr").textContent = "Maksymalna kwota pożyczki to 500 000 PLN."; return; }
+      if (v > avail) { document.getElementById("loanErr").textContent = "Za dużo — przekracza dostępną kwotę."; return; }
+      const totalDue = Math.round(v * 1.015);
+      career.loan = { principal: v, balance: totalDue, dueDate: addYears(career.date, 1), overdue: false };
+      career.money += v;
+      markDirty(); renderCareerBar();
       closeModal();
       playSuccessSound();
-      openModal("✅ Pożyczka przyznana", `<p>Otrzymujesz <b>${fmtMoney(v)} PLN</b> na konto firmowe. Pamiętaj o spłacie — inaczej naliczą się dodatkowe odsetki karne.</p>`, false);
+      openModal("✅ Pożyczka przyznana", `<p>Otrzymujesz <b>${fmtMoney(v)} PLN</b> na konto firmowe. Do oddania będzie <b>${fmtMoney(totalDue)} PLN</b>, czyli łącznie o 1,5% więcej.</p><p class="dim">Termin spłaty: ${fmtDate(career.loan.dueDate)}.</p>`, false);
     } },
     { label: "Anuluj", kind: "secondary" }
   ]);
+  document.querySelectorAll("#modalContent .loan-quick button").forEach(b => {
+    b.onclick = () => {
+      document.getElementById("loanAmt").value = b.dataset.loan;
+      document.getElementById("loanErr").textContent = Number(b.dataset.loan) < MIN_LOAN ? "Ta szybka kwota jest poniżej minimalnej pożyczki 50 000 PLN." : "";
+    };
+  });
 }
 function openRepayLoanDialog() {
   const maxPay = Math.min(career.money, career.loan.balance);
   const html = `
-    <p class="prod-hint">Zadłużenie: <b>${fmtMoney(career.loan.balance)} PLN</b>. Masz na koncie: <b>${fmtMoney(career.money)} PLN</b>.</p>
-    <label class="field">Kwota spłaty (PLN)<input type="number" id="repayAmt" min="1" max="${maxPay}" step="100" inputmode="numeric" value="${maxPay}"></label>
+    <p class="prod-hint">Do oddania: <b>${fmtMoney(career.loan.balance)} PLN</b>. Masz na koncie: <b>${fmtMoney(career.money)} PLN</b>.</p>
+    <p class="prod-hint">Możesz wpłacić dowolną kwotę teraz. Nie trzeba czekać do końca miesiąca ani do kolejnego dnia.</p>
+    <label class="field">Kwota spłaty (PLN)<input type="number" id="repayAmt" min="1" max="${maxPay}" step="1" inputmode="numeric" value="${maxPay}"></label>
     <div class="form-error" id="repayErr"></div>`;
   openModal("💸 Spłać pożyczkę", html, false, [
     { label: "Spłać", kind: "primary", onClick: () => {
@@ -2653,10 +2982,12 @@ function openRepayLoanDialog() {
       if (!v || v < 1) { document.getElementById("repayErr").textContent = "Wpisz kwotę większą od zera."; return; }
       if (v > career.money) { document.getElementById("repayErr").textContent = "Nie masz tylu pieniędzy."; return; }
       if (v > career.loan.balance) { document.getElementById("repayErr").textContent = "To więcej niż wynosi zadłużenie."; return; }
-      career.money -= v; career.loan.balance -= v; career.loan.paidThisTurn = true; markDirty(); renderCareerBar();
+      career.money -= v; career.loan.balance -= v;
+      if (career.loan.balance <= 0) career.loan = { principal: 0, balance: 0, dueDate: null, overdue: false };
+      markDirty(); renderCareerBar();
       closeModal();
       playSuccessSound();
-      openModal("✅ Spłacono", `<p>Spłaciłeś <b>${fmtMoney(v)} PLN</b> zadłużenia. Pozostało: <b>${fmtMoney(career.loan.balance)} PLN</b>.</p>`, false);
+      openModal("✅ Spłacono", `<p>Wpłaciłeś <b>${fmtMoney(v)} PLN</b>. Pozostało: <b>${fmtMoney(career.loan.balance)} PLN</b>.</p>`, false);
     } },
     { label: "Anuluj", kind: "secondary" }
   ]);
@@ -2675,7 +3006,7 @@ function chartHtml() {
       <div class="stat-label" style="width:130px;${r.mine ? "font-weight:800;color:var(--accent)" : ""}">#${i + 1} ${esc(r.name)}</div>
       <div class="bar-bg"><div class="bar-fill" style="width:${Math.max(4, r.score / max * 100)}%;background:${r.mine ? "var(--accent)" : "var(--accent-2)"}"></div></div>
     </div>`).join("");
-  return `<p class="prod-hint">Ranking siły rynkowej marek komputerowych w miesiącu ${esc(fmtDate(career.date))}. Top marka miesiąca: <b>${esc(rows[0].name)}</b>. Ranking zmienia się co miesiąc.</p>${list}${playerScore > 0 ? "" : '<p class="prod-hint">Twoja firma pojawi się w rankingu, gdy zdobędziesz więcej fanów i sprzedaży.</p>'}`;
+  return `<p class="prod-hint">Ranking siły rynkowej marek komputerowych w dniu ${esc(fmtDate(career.date))}. Top marka dnia: <b>${esc(rows[0].name)}</b>. Ranking zmienia się codziennie.</p>${list}${playerScore > 0 ? "" : '<p class="prod-hint">Twoja firma pojawi się w rankingu, gdy zdobędziesz więcej fanów i sprzedaży.</p>'}`;
 }
 
 function showProfileModal(kind) {
@@ -2684,6 +3015,7 @@ function showProfileModal(kind) {
   let html = `<div class="prof-head">${av}<div><div class="cb-company">${esc(p.company)}</div><div class="cb-name">${esc(p.name)}</div></div></div>`;
   if (kind === "Firma") {
     html += `<p class="prof-line"><b>Nazwa firmy:</b> ${esc(p.company)}</p><p class="prof-line"><b>Założyciel:</b> ${esc(p.name)}</p>` +
+      `<p class="prof-line"><b>Fani:</b> ${career.fans}</p>` +
       `<div class="prod-block"><div class="prod-title">📦 Stworzone produkty</div>${productsHtml()}</div>`;
   } else {
     html += `<p class="prof-line"><b>Imię i nazwisko:</b> ${esc(p.name)}</p><p class="prof-line"><b>Firma:</b> ${esc(p.company)}</p>` +
@@ -2696,6 +3028,100 @@ function showProfileModal(kind) {
     clearProfile(); clearCareerSave(); careerProfile = null; discardCareer();
     leaveToMenu();
   };
+}
+
+const UI_SETTINGS_KEY = "forgetech.ui.settings.v1";
+const LANGS = {
+  pl: {name:"Polski", badge:"", menuSub:"Wybierz tryb gry", sandbox:"🧪 Sandbox", career:"🚀 Kariera", info:"ℹ️ Informacje", settings:"⚙️ Ustawienia", exit:"⏻ Wyjdź", back:"← Wróć do menu", restart:"Uruchom ponownie", understand:"Rozumiem", next:"Dalej", create:"Utwórz", photo:"Wybierz zdjęcie", difficulty:"Poziom trudności", easy:"Łatwy", medium:"Średni", hard:"Trudny", language:"Język", whiteBg:"Białe tło", music:"Muzyka w tle", volume:"Głośność muzyki", ready:"Gotowe", beta:"BETA", menu:"Menu", day:"Dzień", fans:"Fani", play:"Graj", pause:"Pauza", computer:"Komputer", phone:"Telefon", robot:"Robot", buildHint:"Stwórz swój własny komputer — dobierz części tak, jak chcesz, w dowolnej kolejności.", choosePart:"Wybierz część poniżej i kliknij miejsce, żeby ją dodać", project:"Twój projekt", building:"Projekt w budowie...", created:"Stworzone!", clearProject:"Możesz wyczyścić projekt i zacząć od nowa"},
+  cs: {name:"Čeština", badge:"BETA", menuSub:"Vyber herní režim", sandbox:"🧪 Sandbox", career:"🚀 Kariéra", info:"ℹ️ Informace", settings:"⚙️ Nastavení", exit:"⏻ Konec", back:"← Zpět do menu", restart:"Spustit znovu", understand:"Rozumím", next:"Další", create:"Vytvořit", photo:"Vybrat fotografii", difficulty:"Obtížnost", easy:"Lehká", medium:"Střední", hard:"Těžká", language:"Jazyk", whiteBg:"Bílé pozadí", music:"Hudba na pozadí", volume:"Hlasitost hudby", ready:"Hotovo", beta:"BETA", menu:"Menu", day:"Den", fans:"Fanoušci", play:"Hrát", pause:"Pauza", computer:"Počítač", phone:"Telefon", robot:"Robot", buildHint:"Vytvoř si vlastní počítač — vyber součástky v libovolném pořadí.", choosePart:"Vyber součástku níže a klikni na místo, kam ji chceš přidat", project:"Tvůj projekt", building:"Projekt ve výstavbě...", created:"Vytvořeno!", clearProject:"Projekt můžeš vyčistit a začít znovu"},
+  en: {name:"English", badge:"Experimental", menuSub:"Choose game mode", sandbox:"🧪 Sandbox", career:"🚀 Career", info:"ℹ️ Information", settings:"⚙️ Settings", exit:"⏻ Exit", back:"← Back to menu", restart:"Restart", understand:"I understand", next:"Next", create:"Create", photo:"Choose photo", difficulty:"Difficulty", easy:"Easy", medium:"Medium", hard:"Hard", language:"Language", whiteBg:"White background", music:"Background music", volume:"Music volume", ready:"Done", beta:"BETA", menu:"Menu", day:"Day", fans:"Fans", play:"Play", pause:"Pause", computer:"Computer", phone:"Phone", robot:"Robot", buildHint:"Build your own computer — choose parts in any order.", choosePart:"Choose a part below and click a slot to add it", project:"Your project", building:"Project in progress...", created:"Created!", clearProject:"You can clear the project and start again"}
+};
+function loadUISettings(){ try { const x=JSON.parse(localStorage.getItem(UI_SETTINGS_KEY)||"{}"); return {lang:["pl","cs","en"].includes(x.lang)?x.lang:"pl", white:x.white===true}; } catch(e){ return {lang:"pl",white:false}; } }
+function saveUISettings(v){ try{localStorage.setItem(UI_SETTINGS_KEY,JSON.stringify(v));}catch(e){} }
+let uiSettings=loadUISettings();
+function t(k){ return (LANGS[uiSettings.lang]||LANGS.pl)[k] || LANGS.pl[k] || k; }
+function applyLanguage(){
+  document.documentElement.lang=uiSettings.lang;
+  document.body.classList.toggle("force-light", uiSettings.white);
+  const map={menuSandbox:"sandbox",menuCareer:"career",menuInfo:"info",menuSettings:"settings",menuExit:"exit",infoBack:"back",exitRestart:"restart",introOk:"understand",careerWarnOk:"understand",careerWarnBack:"back",careerWelcomeNext:"next",careerWelcomeBack:"back",pickPhoto:"photo",careerCreate:"create",careerFormBack:"back"};
+  Object.entries(map).forEach(([id,key])=>{const el=document.getElementById(id);if(el)el.textContent=t(key);});
+  const sub=document.querySelector("#menuScreen .menu-sub"); if(sub)sub.textContent=t("menuSub");
+  const diff=document.querySelector('#careerFormScreen .field'); if(diff)diff.childNodes[0].textContent=t("difficulty")+"\n      ";
+  const vals=document.querySelectorAll('.difficulty-option strong'); if(vals.length>=3){vals[0].textContent=t("easy");vals[1].textContent=t("medium");vals[2].textContent=t("hard");}
+  const title=document.querySelector('#careerWelcomeScreen .menu-title'); if(title)title.textContent=uiSettings.lang==='cs'?"Vytvoř svou firmu!":uiSettings.lang==='en'?"Create your company!":"Twórz swoją firmę!";
+  const welcome=document.querySelector('#careerWelcomeScreen .menu-sub'); if(welcome)welcome.textContent=uiSettings.lang==='cs'?"Začni svou kariéru ve ForgeTech.":uiSettings.lang==='en'?"Start your career in ForgeTech.":"Zacznij swoją karierę w ForgeTech.";
+  translateGameChrome();
+}
+function translateGameChrome(){
+  const set=(id,key)=>{const el=document.getElementById(id);if(el)el.textContent=t(key);};
+  set("openDrawer", "menu");
+  const drawerMode=document.getElementById("drawerMode");
+  if(drawerMode) drawerMode.textContent=gameMode==="career"?(uiSettings.lang==="cs"?"Kariéra":uiSettings.lang==="en"?"Career":"Kariera"):(uiSettings.lang==="cs"?"Sandbox":"Sandbox");
+  const tabs=document.querySelectorAll(".tab");
+  tabs.forEach(el=>{
+    const txt=el.textContent.trim();
+    if(txt.includes("Telefon")) el.textContent="📱 "+t("phone");
+    else if(txt.includes("Robot")) el.textContent="🤖 "+t("robot");
+    else if(txt.includes("Komputer")) el.textContent="💻 "+t("computer");
+  });
+  const buildHint=document.querySelector(".build-hint"); if(buildHint)buildHint.textContent=t("buildHint");
+  const date=document.querySelector(".cb-date"); if(date && career) date.textContent="📅 "+t("day")+" "+fmtDate(career.date);
+  const turn=document.querySelector(".turn-btn"); if(turn)turn.textContent=gameRunning?"⏸ "+t("pause"):"▶ "+t("play");
+  document.querySelectorAll(".cb-chip.fans").forEach(el=>{ if(career) el.textContent="👥 "+t("fans")+": "+career.fans; });
+  const drawer=document.getElementById("drawer");
+  if(drawer){
+    const labels={"Firma":uiSettings.lang==="cs"?"🏢 Firma":uiSettings.lang==="en"?"🏢 Company":"🏢 Firma","Statystyki":uiSettings.lang==="cs"?"📊 Statistiky":uiSettings.lang==="en"?"📊 Statistics":"📊 Statystyki","Finanse":uiSettings.lang==="cs"?"💰 Finance":uiSettings.lang==="en"?"💰 Finances":"💰 Finanse","Wykres":uiSettings.lang==="cs"?"📈 Graf":uiSettings.lang==="en"?"📈 Chart":"📈 Wykres","Inne":uiSettings.lang==="cs"?"🧩 Další":uiSettings.lang==="en"?"🧩 Other":"🧩 Inne","Ustawienia":uiSettings.lang==="cs"?"⚙️ Nastavení":uiSettings.lang==="en"?"⚙️ Settings":"⚙️ Ustawienia","Konto":uiSettings.lang==="cs"?"👤 Účet":uiSettings.lang==="en"?"👤 Account":"👤 Konto"};
+    drawer.querySelectorAll(".drawer-item[data-title]").forEach(el=>{const k=el.dataset.title;if(labels[k])el.textContent=labels[k];});
+    const exit=drawer.querySelector('.drawer-item[data-act="exit"]'); if(exit)exit.textContent=uiSettings.lang==="cs"?"🚪 Zpět do menu":uiSettings.lang==="en"?"🚪 Exit to menu":"🚪 Wyjdź do menu";
+  }
+}
+
+function applyTheme(){ document.body.classList.toggle("force-light", uiSettings.white); }
+function openSettingsModal(){
+  const saved=loadAudioSettings();
+  const html=`
+    <div class="settings-row"><label for="languageSelect">${t("language")}</label><select class="settings-select" id="languageSelect"><option value="pl">Polski</option><option value="cs">Čeština (BETA)</option><option value="en">English (Experimental)</option></select></div>
+    <div class="settings-row"><label for="whiteBgToggle">${t("whiteBg")}</label><input class="settings-check" type="checkbox" id="whiteBgToggle" ${uiSettings.white?"checked":""}></div>
+    <div class="settings-row"><label for="musicToggle">${t("music")}</label><input class="settings-check" type="checkbox" id="musicToggle" ${saved.enabled?"checked":""}></div>
+    <div class="settings-row"><label for="musicVolume">${t("volume")}</label><span class="settings-value" id="musicVolumeValue">${Math.round(saved.volume*100)}%</span></div>
+    <input class="settings-range" type="range" id="musicVolume" min="0" max="100" step="1" value="${Math.round(saved.volume*100)}">`;
+  openModal("⚙️ "+t("settings"),html,false,[{label:t("ready"),kind:"primary"}]);
+  const lang=document.getElementById("languageSelect"), white=document.getElementById("whiteBgToggle"), toggle=document.getElementById("musicToggle"), range=document.getElementById("musicVolume"), value=document.getElementById("musicVolumeValue");
+  lang.value=uiSettings.lang;
+  const changeLanguage = () => {
+    const nextLang = lang.value;
+    if (!LANGS[nextLang]) return;
+    uiSettings.lang = nextLang;
+    saveUISettings(uiSettings);
+    applyLanguage();
+    // Przerysuj okno ustawień po zmianie, ale zachowaj wybrany język.
+    openSettingsModal();
+  };
+  lang.onchange = changeLanguage;
+  lang.oninput = changeLanguage;
+  white.onchange=()=>{uiSettings.white=white.checked;saveUISettings(uiSettings);applyTheme();};
+  toggle.onchange=()=>{const next={enabled:toggle.checked,volume:Number(range.value)/100};saveAudioSettings(next);if(next.enabled)startBackgroundMusic();else stopBackgroundMusic();};
+  range.oninput=()=>{const next={enabled:toggle.checked,volume:Number(range.value)/100};value.textContent=Math.round(next.volume*100)+"%";saveAudioSettings(next);updateMusicVolume(next.volume);};
+}
+
+function showCareerTutorial(step = 0) {
+  if (!isCareer() || career.tutorialSeen) return;
+  const steps = [
+    ["🎓 Samouczek 1/5", "W trybie Kariera budujesz komputer z części. Wybierz podzespoły, włóż je do wymaganych miejsc i kliknij „Stwórz”."],
+    ["🎓 Samouczek 2/5", "Po stworzeniu zestawu przejdziesz do produkcji. Ustal nazwę, liczbę sztuk i cenę sprzedaży, a potem rozpocznij produkcję."],
+    ["🎓 Samouczek 3/5", "Przycisk „▶ Graj” uruchamia przebieg czasu. Co 3 sekundy mija jeden dzień, a fani i siła konkurencyjnych firm są wtedy aktualizowane."],
+    ["🎓 Samouczek 4/5", "W „💰 Finansach” możesz wziąć pożyczkę od 50 000 PLN. Masz rok na spłatę, a do oddania jest pożyczona kwota + 1,5%."],
+    ["🎓 Samouczek 5/5", "Pożyczkę możesz spłacać częściami: w dowolnym dniu i w dowolnej kwocie. W menu znajdziesz też Wykres i Statystyki." ]
+  ];
+  const [title, body] = steps[step] || steps[0];
+  const last = step >= steps.length - 1;
+  openModal(title, `<p>${body}</p>`, false, [
+    { label: last ? "Zaczynamy!" : "Dalej →", kind: "primary", onClick: () => {
+      if (last) { career.tutorialSeen = true; markDirty(); }
+      else showCareerTutorial(step + 1);
+    } },
+    { label: "Pomiń", kind: "secondary", onClick: () => { career.tutorialSeen = true; markDirty(); } }
+  ]);
 }
 
 function openDrawer() {
@@ -2715,25 +3141,26 @@ document.querySelectorAll("#drawer .drawer-item").forEach(btn => {
       requestExit();
     } else if (btn.dataset.act === "save") {
       doSave();
-    } else if (btn.dataset.act === "create") {
-      document.getElementById("gameRoot").style.display = ""; window.scrollTo(0,0);
     } else if (gameMode === "career" && careerProfile && btn.dataset.title === "Firma") {
       openCompanyPanel();
-    } else if (gameMode === "career" && careerProfile && btn.dataset.title === "Pracownicy") {
-      openEmployeesPanel();
+    } else if (gameMode === "career" && careerProfile && btn.dataset.title === "Konto") {
+      showProfileModal(btn.dataset.title);
     } else if (isCareer() && btn.dataset.title === "Statystyki") {
-      openFullScreenModal("📊 Statystyki", statsHtml(), false);
+      openModal("📊 Statystyki", statsHtml(), false);
     } else if (isCareer() && btn.dataset.title === "Finanse") {
-      openFinanceModal(); document.getElementById("modalBox").classList.add("full-screen-panel");
+      openFinanceModal();
     } else if (isCareer() && btn.dataset.title === "Wykres") {
-      openFullScreenModal("📈 Wykres rynku", chartHtml(), false);
+      openModal("📈 Wykres rynku", chartHtml(), false);
+    } else if (btn.dataset.title === "Ustawienia") {
+      openSettingsModal();
     } else if (["Statystyki", "Finanse", "Wykres"].includes(btn.dataset.title)) {
-      openFullScreenModal("🚧 " + btn.dataset.title, "<p>Ta zakładka jest dostępna w trybie Kariera — po założeniu firmy zobaczysz tu dane swojej działalności.</p>", false);
+      openModal("🚧 " + btn.dataset.title, "<p>Ta zakładka jest dostępna w trybie Kariera — po założeniu firmy zobaczysz tu dane swojej działalności.</p>", false);
     } else {
-      openFullScreenModal("🚧 " + btn.dataset.title, "<p>Ta zakładka jest jeszcze w budowie i pojawi się w jednej z przyszłych wersji gry.</p>", false);
+      openModal("🚧 " + btn.dataset.title, "<p>Ta zakładka jest jeszcze w budowie i pojawi się w jednej z przyszłych wersji gry.</p>", false);
     }
   };
 });
+document.getElementById("menuSettings").onclick = () => openSettingsModal();
 document.getElementById("menuInfo").onclick = () => {
   document.getElementById("menuScreen").classList.remove("open");
   document.getElementById("infoScreen").classList.add("open");
@@ -2752,6 +3179,11 @@ document.getElementById("exitRestart").onclick = () => { window.location.reload(
 
 // ==================== EFEKTY DŹWIĘKOWE ====================
 let audioCtx = null;
+let musicGain = null;
+let musicTimer = null;
+let musicStep = 0;
+const MUSIC_KEY = "forgetech.audio.settings.v1";
+const MUSIC_NOTES = [261.63, 293.66, 329.63, 392.00, 329.63, 293.66, 246.94, 293.66, 261.63, 329.63, 392.00, 329.63];
 function ensureAudio() {
   if (!audioCtx) { try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { audioCtx = null; } }
   return audioCtx;
@@ -2769,16 +3201,83 @@ function playTone(freq, dur, type, vol, delay) {
   osc.connect(gain); gain.connect(ctx.destination);
   osc.start(now); osc.stop(now + dur + 0.02);
 }
-function playClickSound() { playTone(740, 0.07, "sine", 0.045, 0); }
+function playClickSound() { playTone(420, 0.055, "sine", 0.022, 0); playTone(630, 0.045, "sine", 0.012, 0.018); }
 function playSuccessSound() { playTone(880, 0.09, "sine", 0.06, 0); playTone(1180, 0.14, "sine", 0.055, 0.08); }
+function loadAudioSettings() {
+  try {
+    const raw = localStorage.getItem(MUSIC_KEY);
+    if (raw) {
+      const x = JSON.parse(raw);
+      return { enabled: x.enabled !== false, volume: Math.min(1, Math.max(0, Number.isFinite(Number(x.volume)) ? Number(x.volume) : 0.18)) };
+    }
+  } catch (e) {}
+  return { enabled: true, volume: 0.18 };
+}
+function saveAudioSettings(v) { try { localStorage.setItem(MUSIC_KEY, JSON.stringify(v)); } catch (e) {} }
+function updateMusicVolume(v) {
+  if (musicGain) musicGain.gain.setTargetAtTime(Math.min(1, Math.max(0, v)), audioCtx.currentTime, 0.08);
+}
+function musicNote(freq, when, duration = 1.8) {
+  const ctx = ensureAudio();
+  if (!ctx || !musicGain) return;
+  const osc = ctx.createOscillator(), gain = ctx.createGain();
+  osc.type = "sine"; osc.frequency.setValueAtTime(freq, when);
+  gain.gain.setValueAtTime(0.0001, when);
+  gain.gain.exponentialRampToValueAtTime(0.11, when + 0.32);
+  gain.gain.exponentialRampToValueAtTime(0.0001, when + duration);
+  osc.connect(gain); gain.connect(musicGain);
+  osc.start(when); osc.stop(when + duration + 0.03);
+}
+function scheduleMusicStep() {
+  const ctx = ensureAudio();
+  const settings = loadAudioSettings();
+  if (!ctx || !settings.enabled || settings.volume <= 0) return;
+  if (ctx.state === "suspended") { try { ctx.resume(); } catch (e) {} }
+  if (!musicGain) {
+    musicGain = ctx.createGain(); musicGain.gain.value = settings.volume * 0.14; musicGain.connect(ctx.destination);
+  }
+  const now = ctx.currentTime + 0.03;
+  musicNote(MUSIC_NOTES[musicStep % MUSIC_NOTES.length], now, 2.4);
+  if (musicStep % 4 === 0) musicNote(MUSIC_NOTES[(musicStep + 2) % MUSIC_NOTES.length] / 2, now, 2.8);
+  musicStep += 1;
+}
+function startBackgroundMusic() {
+  const settings = loadAudioSettings();
+  if (!settings.enabled || settings.volume <= 0) return;
+  const ctx = ensureAudio();
+  if (!ctx) return;
+  if (ctx.state === "suspended") { try { ctx.resume(); } catch (e) {} }
+  if (!musicGain) { musicGain = ctx.createGain(); musicGain.connect(ctx.destination); }
+  updateMusicVolume(settings.volume * 0.14);
+  if (musicTimer) return;
+  scheduleMusicStep();
+  musicTimer = setInterval(scheduleMusicStep, 2100);
+}
+function stopBackgroundMusic() {
+  if (musicTimer) { clearInterval(musicTimer); musicTimer = null; }
+  if (musicGain && audioCtx) {
+    try { musicGain.gain.setTargetAtTime(0.0001, audioCtx.currentTime, 0.08); } catch (e) {}
+  }
+  musicGain = null;
+  musicStep = 0;
+}
 document.addEventListener("click", (e) => {
   const el = e.target.closest(
     "button, .tab, .slot, .part-card, .switcher-btn, .tier-filter-btn, .drawer-item, .big-btn, " +
-    ".cb-chip, .price-quick button, .modal-btn, .info-btn, .avatar, .avatar-sm, .drawer-item"
+    ".cb-chip, .price-quick button, .loan-quick button, .modal-btn, .info-btn, .avatar, .avatar-sm, .drawer-item"
   );
-  if (el && !el.disabled) playClickSound();
+  if (el && !el.disabled) {
+    el.classList.remove("tap-anim");
+    void el.offsetWidth;
+    el.classList.add("tap-anim");
+    setTimeout(() => el.classList.remove("tap-anim"), 260);
+    playClickSound();
+  }
 }, true);
 
+uiSettings=loadUISettings();
+applyTheme();
+applyLanguage();
 initBuild();
 renderAll();
 </script>
